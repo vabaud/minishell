@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:26:17 by vabaud            #+#    #+#             */
-/*   Updated: 2024/11/11 22:11:11 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/11/13 18:20:29 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,8 @@ int	main(void)
 		str = readline("!!! shell> ");
 		if (str[0] == 'p')
 			pwd();
-        if (has_unclosed_quotes(str))
-            printf("unclosed quotes\n");
-        if (has_logical_operators(str))
-            printf("logical operator \"&&\" and \"||\" are not supported\n");
-        if (has_invalid_redirections(str))
-            printf("invalid redirections\n");
+        if (!syntax_error_checker(str))
+            return 0;
 		add_history(str);
 		printf("%s\n", str);
 	}

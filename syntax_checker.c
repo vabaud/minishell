@@ -6,14 +6,25 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 19:25:48 by vabaud            #+#    #+#             */
-/*   Updated: 2024/11/11 22:44:46 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/11/13 19:18:28 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-// syntax_error_checker
-// has_misplaced_operators
+int syntax_error_checker(char *s)
+{
+    if (has_unclosed_quotes(s))
+        return(perror("Syntax error: unclosed quote\n"), 0);
+    else if (has_logical_operators(s))
+        return(perror("Error: Logical operators '&&' and '||' \
+			are not supported.\n"), 0);
+    else if (has_misplaced_operators(s))
+        return(perror("Syntax error: misplaced operator\n"), 0);
+    else if (has_invalid_redirections(s))
+        return(perror("Syntax error: invalid redirection\n"), 0);
+    return 1;
+}
 
 int	has_unclosed_quotes(char *s)
 {
@@ -69,16 +80,24 @@ int has_invalid_redirections(char *s)
     {
         if ((s[start] == '>' || s[start] == '<') && (s[start+1] == '>' || s[start+1] == '<') && (s[start+2] == '>' || s[start+2] == '<'))
             return 1;
-        if ((s[start] == '>' || s[start] == '<') && (s[start+1] == ' ' || s[start+1] == '\t'))
-        {
-            while ((s[++start] == ' ' || s[start] == '\t') && s[start] != '\0')
-                ;
-            if (s[start] == '<' || s[start] == '>')
-                return 1;
-        }
         start++;
     }
     return 0;
 }
 
+int has_misplaced_operators(char *s)
+{
+    int start;
+    int end;
+
+    start = 0;
+    end = ft_strlen(s) - 1;
+    while ((s[start] == ' ' || s[start] == '\t') && s[start] != '\0')
+        start++;
+    while ((s[end] == ' ' || s[end] == '\t') && end > 0)
+        end--;
+    if (s[start] == '|' || s[end] == '|')
+        return 1;
+    return 0;
+}
 

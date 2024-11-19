@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:26:17 by vabaud            #+#    #+#             */
-/*   Updated: 2024/11/13 18:20:29 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/11/18 19:01:32 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	main(void)
 			pwd();
         if (!syntax_error_checker(str))
             return 0;
+        tokenize_input(str);
 		add_history(str);
 		printf("%s\n", str);
 	}

@@ -7,6 +7,8 @@ LIBFTDIR = libft/
 
 SRC = main.c \
 		syntax_checker.c \
+		tokenization.c \
+		tokenization_utils.c \
 
 OBJ = ${SRC:.c=.o}
 

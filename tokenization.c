@@ -6,13 +6,13 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 20:13:26 by vabaud            #+#    #+#             */
-/*   Updated: 2024/11/19 20:10:56 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/11/20 16:10:07 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-int	tokenize_input(char *s)
+t_token	*tokenize_input(char *s)
 {
 	int		i;
 	t_token	*token;
@@ -66,25 +66,25 @@ int	handle_word(char *s, int i, t_token **token)
 	start = i;
 	while (s[i])
 	{
-		if (s[start] == '\'' || s[start] == '\"')
-		{
-			while (s[++i] != s[start] && s[i])
-				;
-			i++;
-			break ;
-		}
-		else if (s[i] == '\'' || s[i] == '\"')
-			break ;
+		// if (s[start] == '\'' || s[start] == '\"')
+		// {
+		// 	while (s[++i] != s[start] && s[i])
+		// 		;
+		// 	i++;
+		// 	break ;
+		// }
+		// else if (s[i] == '\'' || s[i] == '\"')
+		// 	break ;
 		if (!in_quotes(s[i]) && ft_strchr(" \t\n><|", s[i]))
 			break ;
 		i++;
 	}
-	if ((s[start] == '\'' || s[start] == '\"') && (s[i - 1] == '\'' || s[i
-			- 1] == '\"'))
-		add_token(token, new_token(TOKEN_WORD, ft_substr(s, start + 1, i - start
-					- 2)));
-	else
-		add_token(token, new_token(TOKEN_WORD, ft_substr(s, start, i - start)));
+	// if ((s[start] == '\'' || s[start] == '\"') && (s[i - 1] == '\'' || s[i
+	// 		- 1] == '\"'))
+	// 	add_token(token, new_token(TOKEN_WORD, ft_substr(s, start + 1, i - start
+	// 				- 2)));
+	// else
+    add_token(token, new_token(TOKEN_WORD, ft_substr(s, start, i - start)));
 	return (i);
 }
 

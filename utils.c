@@ -1,43 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/08 18:26:17 by vabaud            #+#    #+#             */
-/*   Updated: 2024/11/21 14:04:53 by vabaud           ###   ########.fr       */
+/*   Created: 2024/11/20 18:10:32 by vabaud            #+#    #+#             */
+/*   Updated: 2024/11/21 13:59:32 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-int	pwd(void)
+char	*remove_quotes(char *s)
 {
-	char	path[PATH_MAX];
+	char	*new_str;
+	int		i;
 
-	if (getcwd(path, PATH_MAX))
+	i = 0;
+	new_str = NULL;
+	while (s[i])
 	{
-		printf("%s\n", path);
-		return (1);
+		while (in_quotes(s[i]) == 2 && (s[i] == '\'' || s[i] == '\"'))
+			i++;
+		if (s[i])
+			new_str = ft_strcharadd(new_str, s[i++]);
 	}
-	return (0);
-}
-
-int	main(void)
-{
-	char	*str;
-
-	while (1)
-	{
-		str = readline("!!! shell> ");
-		add_history(str);
-		if (str[0] == 'p')
-			pwd();
-        if (!syntax_error_checker(str))
-            return 0;
-        tokenize_input(str);
-        str = remove_quotes(str);
-		printf("%s\n", str);
-	}
+    free(s);
+	return (new_str);
 }

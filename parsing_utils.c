@@ -1,43 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/08 18:26:17 by vabaud            #+#    #+#             */
-/*   Updated: 2024/11/21 14:04:53 by vabaud           ###   ########.fr       */
+/*   Created: 2024/11/20 16:02:04 by vabaud            #+#    #+#             */
+/*   Updated: 2024/11/20 16:19:57 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
-int	pwd(void)
+t_command	*new_command()
 {
-	char	path[PATH_MAX];
+	t_command	*cmd;
 
-	if (getcwd(path, PATH_MAX))
-	{
-		printf("%s\n", path);
-		return (1);
-	}
-	return (0);
-}
+    cmd = malloc(sizeof(t_command));
+    if (!cmd)
+        return NULL;
+    cmd->args = NULL;
+    cmd->input_file = NULL;
+    cmd->output_file = NULL;
+    cmd->append_mode = 0;
+    cmd->next = NULL;
 
-int	main(void)
-{
-	char	*str;
-
-	while (1)
-	{
-		str = readline("!!! shell> ");
-		add_history(str);
-		if (str[0] == 'p')
-			pwd();
-        if (!syntax_error_checker(str))
-            return 0;
-        tokenize_input(str);
-        str = remove_quotes(str);
-		printf("%s\n", str);
-	}
+	return (cmd);
 }

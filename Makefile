@@ -10,6 +10,8 @@ SRC = main.c \
 		tokenization.c \
 		tokenization_utils.c \
 		utils.c \
+		parsing.c \
+		parsing_utils.c \
 
 OBJ = ${SRC:.c=.o}
 

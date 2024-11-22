@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:37:24 by vabaud            #+#    #+#             */
-/*   Updated: 2024/11/21 13:19:01 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/11/22 18:53:19 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,14 @@ t_token					*tokenize_input(char *s);
 int						in_quotes(char c);
 int						close_quotes(char c);
 char					*remove_quotes(char *str);
+void					parse_token(t_token *tokens);
+void					add_command(t_command **cmd, t_command *new_cmd);
+void					add_arg(t_command *cmd, char *new_str);
+int						set_redirection(t_command *cmd, t_token *token);
+int						set_input(t_command *cmd, char *file);
+int						set_out_or_append(t_command *cmd, char *file,
+							t_token_type type);
+t_command				*new_command(void);
+void					print_cmd(t_command *commands);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:10:32 by vabaud            #+#    #+#             */
-/*   Updated: 2024/11/21 13:59:32 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/11/22 20:53:09 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*remove_quotes(char *s)
 	new_str = NULL;
 	while (s[i])
 	{
-		while (in_quotes(s[i]) == 2 && (s[i] == '\'' || s[i] == '\"'))
+		while (in_quotes(s[i]) && (s[i] == '\'' || s[i] == '\"'))
 			i++;
 		if (s[i])
 			new_str = ft_strcharadd(new_str, s[i++]);

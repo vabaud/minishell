@@ -6,18 +6,53 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:00:58 by vabaud            #+#    #+#             */
-/*   Updated: 2024/11/21 15:14:11 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/11/22 20:00:49 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/minishell.h"
 
+void	parse_token(t_token *tokens)
+{
+	t_command	*cmd;
+	t_command	*current;
+	t_token		*token;
+
+	cmd = NULL;
+    current = new_command();
+	token = tokens;
+	while (token)
+	{
+        if (token->type == TOKEN_PIPE)
+        {
+            add_command(&cmd, current);
+            current = new_command();
+        }
+		else if (token->type == TOKEN_WORD)
+		{
+			add_arg(current, token->value);
+		}
+		else if (token->type == TOKEN_REDIR_APPEND
+			|| token->type == TOKEN_REDIR_IN || token->type == TOKEN_REDIR_OUT)
+        {
+			set_redirection(current, token);
+            token = token->next;
+        }
+		token = token->next;
+	}
+    add_command(&cmd, current);
+	print_cmd(cmd);
+}
+
 void	add_command(t_command **cmd, t_command *new_cmd)
 {
 	t_command	*last;
 
-	if (cmd == NULL)
-		cmd = new_cmd;
+    last = NULL;
+	if ((*cmd) == NULL)
+    {
+		(*cmd) = new_cmd;
+    }
 	else
 	{
 		last = (*cmd);
@@ -29,69 +64,79 @@ void	add_command(t_command **cmd, t_command *new_cmd)
 
 void	add_arg(t_command *cmd, char *new_str)
 {
-	int	i;
-    char **new_arg;
+	int		i;
+	char	**new_arg;
 
 	i = 0;
-    while (cmd->args && cmd->args[i])
-        i++;
-    new_arg = malloc(sizeof(char *) * (i + 2));
-    if (!new_arg)
-        return NULL;
-    i += 2;
-    new_arg[i--] = NULL;
-    new_arg[i--] = ft_strdup(new_str);
-    while (i > 0)
+	if (!cmd || !new_str)
+		return ;
+	while (cmd->args && cmd->args[i])
+		i++;
+	new_arg = malloc(sizeof(char *) * (i + 2));
+	if (!new_arg)
+		return ;
+	i += 1;
+	new_arg[i--] = NULL;
+	new_arg[i--] = ft_strdup(new_str);
+	while (i >= 0)
+	{
+		new_arg[i] = ft_strdup(cmd->args[i]);
+		i--;
+	}
+    if (cmd->args)
     {
-        new_arg[i] = ft_strdup(cmd->args[i]);
-        i--;
+        free(cmd->args);
     }
+	cmd->args = new_arg;
 }
 
-int set_redirection(t_command *cmd, char *file, t_token *token)
+int	set_redirection(t_command *cmd, t_token *token)
 {
-    if (token->type == TOKEN_REDIR_IN)
-        cmd->input_file = ft_strdup(file);
-    else if (token->type == TOKEN_REDIR_OUT)
-    {
-        cmd->output_file = ft_strdup(file);
-        if (cmd->append_mode == 1)
-            cmd->append_mode = 0;
-    }
-    else if (token->type == TOKEN_REDIR_APPEND)
-    {
-        cmd->output_file = ft_strdup(file);
-        cmd->append_mode = 1;
-    }
-    return 1;
-}   
-
-int set_input(t_command *cmd, char *file)
-{
-    if (cmd->input_file)
-    {
-        free(cmd->input_file);
-        cmd->input_file = ft_strdup(file);
-    }
-    if (!open(file, O_RDONLY))
-        return 0;
-    return 1;
+	if (token->type == TOKEN_REDIR_IN)
+	{
+		if (!set_input(cmd, token->next->value))
+			return (0);
+	}
+	else if (token->type == TOKEN_REDIR_OUT
+		|| token->type == TOKEN_REDIR_APPEND)
+	{
+		if (!set_out_or_append(cmd, token->next->value, token->type))
+			return (0);
+	}
+	return (1);
 }
 
-int set_out_or_append(t_command *cmd, char *file, t_token_type type)
+int	set_input(t_command *cmd, char *file)
+{
+	if (cmd->input_file)
+	{
+		free(cmd->input_file);
+	}
+    cmd->input_file = ft_strdup(file);
+	if (!open(file, O_RDONLY))
+		return (0);
+	return (1);
+}
+
+int	set_out_or_append(t_command *cmd, char *file, t_token_type type)
 {
     if (cmd->output_file)
-    {
         free(cmd->output_file);
-        cmd->output_file = ft_strdup(file);
-        if (cmd->append_mode == 1 && type == TOKEN_REDIR_OUT)
-            cmd->append_mode = 0;
-        else if (type == TOKEN_REDIR_APPEND)
-            cmd->append_mode = 1;
-        if (!open(file, O_RDONLY))
-            return 0;
+    if (cmd->append_mode == 1 && type == TOKEN_REDIR_OUT)
+        cmd->append_mode = 0;
+    else if (type == TOKEN_REDIR_APPEND)
+        cmd->append_mode = 1;
+    cmd->output_file = ft_strdup(file);
+    if (!open(file, O_RDONLY))
+    {
+        return (0);
     }
-    return 1;
+	return (1);
 }
 
-void handle_heredoc(t_command *cmd, char);
+// void handle_heredoc(t_command *cmd, t_token *token)
+// {
+//     t_token *new_token;
+
+//     new_token = token;
+// }

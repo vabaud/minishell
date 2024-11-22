@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:52:56 by vabaud            #+#    #+#             */
-/*   Updated: 2024/11/21 13:45:26 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/11/22 20:56:45 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,23 @@ int	in_quotes(char c)
 {
 	static char	q_char = '\0';
 	static int	q_count = 0;
-	int			status;
+	// int			status;
 
-	status = 0;
+	// status = 0;
 	if (c == '\'' || c == '\"')
 	{
 		if (q_count == 1 && c == q_char)
 		{
 			q_count = 0;
-			status = 2;
+            return 1;
+			// status = 2;
 		}
 		else if (q_count == 0)
 		{
 			q_char = c;
 			q_count = 1;
-			status = 2;
+			// status = 2;
 		}
 	}
-	return (status);
+	return (q_count);
 }

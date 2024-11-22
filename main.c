@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:26:17 by vabaud            #+#    #+#             */
-/*   Updated: 2024/11/21 14:04:53 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/11/22 20:58:13 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	pwd(void)
 
 	if (getcwd(path, PATH_MAX))
 	{
-		printf("%s\n", path);
+		ft_printf("%s\n", path);
 		return (1);
 	}
 	return (0);
@@ -27,7 +27,9 @@ int	pwd(void)
 int	main(void)
 {
 	char	*str;
+    t_token *token;
 
+    token = NULL;
 	while (1)
 	{
 		str = readline("!!! shell> ");
@@ -36,8 +38,12 @@ int	main(void)
 			pwd();
         if (!syntax_error_checker(str))
             return 0;
-        tokenize_input(str);
+        token = tokenize_input(str);
+        parse_token(token);
         str = remove_quotes(str);
-		printf("%s\n", str);
+		ft_printf("%s\n", str);
 	}
 }
+
+// test koo sadasd "[wa>""m''esm" < jesj | jesh >> hu
+/* Problemes avec in_quotes */

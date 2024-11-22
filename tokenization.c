@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 20:13:26 by vabaud            #+#    #+#             */
-/*   Updated: 2024/11/20 16:10:07 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/11/22 20:09:25 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_token	*tokenize_input(char *s)
 			i = handle_word(s, i, &token);
 	}
 	display_tokens(token);
-	return (0);
+	return (token);
 }
 
 int	handle_special_chars(char *s, int i, t_token **token)
@@ -66,24 +66,12 @@ int	handle_word(char *s, int i, t_token **token)
 	start = i;
 	while (s[i])
 	{
-		// if (s[start] == '\'' || s[start] == '\"')
-		// {
-		// 	while (s[++i] != s[start] && s[i])
-		// 		;
-		// 	i++;
-		// 	break ;
-		// }
-		// else if (s[i] == '\'' || s[i] == '\"')
-		// 	break ;
 		if (!in_quotes(s[i]) && ft_strchr(" \t\n><|", s[i]))
 			break ;
+        printf("%c\n", s[i]);
 		i++;
 	}
-	// if ((s[start] == '\'' || s[start] == '\"') && (s[i - 1] == '\'' || s[i
-	// 		- 1] == '\"'))
-	// 	add_token(token, new_token(TOKEN_WORD, ft_substr(s, start + 1, i - start
-	// 				- 2)));
-	// else
+    printf("%d\n", i);
     add_token(token, new_token(TOKEN_WORD, ft_substr(s, start, i - start)));
 	return (i);
 }
@@ -111,11 +99,11 @@ void	display_tokens(t_token *tokens)
 	token = tokens;
 	while (token)
 	{
-		printf("Token: \033[0;36m %-20s \033[0m |\t \
-			Type: \033[0;35m %-18s \033[0m \n",
+		ft_printf("Token: \033[0;36m %s \033[0m |\t \
+			Type: \033[0;35m %s \033[0m \n",
 				token->value,
 				get_token_type_name(token->type));
-		printf("--------------------------------------------------\n");
+		ft_printf("--------------------------------------------------\n");
 		token = token->next;
 	}
 }

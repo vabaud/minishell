@@ -6,11 +6,11 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 20:13:26 by vabaud            #+#    #+#             */
-/*   Updated: 2024/11/22 20:09:25 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/11/23 18:30:48 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+#include "../../include/minishell.h"
 
 t_token	*tokenize_input(char *s)
 {
@@ -68,10 +68,8 @@ int	handle_word(char *s, int i, t_token **token)
 	{
 		if (!in_quotes(s[i]) && ft_strchr(" \t\n><|", s[i]))
 			break ;
-        printf("%c\n", s[i]);
 		i++;
 	}
-    printf("%d\n", i);
     add_token(token, new_token(TOKEN_WORD, ft_substr(s, start, i - start)));
 	return (i);
 }

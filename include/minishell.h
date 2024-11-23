@@ -6,14 +6,14 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:37:24 by vabaud            #+#    #+#             */
-/*   Updated: 2024/11/22 18:53:19 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/11/23 18:32:21 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "../libft/libft.h"
+# include "libft/libft.h"
 # include <fcntl.h>
 # include <limits.h>
 # include <readline/history.h>
@@ -77,5 +77,6 @@ int						set_out_or_append(t_command *cmd, char *file,
 							t_token_type type);
 t_command				*new_command(void);
 void					print_cmd(t_command *commands);
+void					free_cmd(t_command *cmd);
 
 #endif

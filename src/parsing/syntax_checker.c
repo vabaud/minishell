@@ -6,11 +6,11 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 19:25:48 by vabaud            #+#    #+#             */
-/*   Updated: 2024/11/13 19:18:28 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/11/23 18:30:38 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+#include "../../include/minishell.h"
 
 int syntax_error_checker(char *s)
 {

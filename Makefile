@@ -3,15 +3,15 @@ CC = gcc
 RM = rm -f
 FLAGS = -Wall -Wextra -Werror
 LDFLAGS = -lreadline
-LIBFTDIR = libft/
+LIBFTDIR = include/libft/
 
-SRC = main.c \
-		syntax_checker.c \
-		tokenization.c \
-		tokenization_utils.c \
-		utils.c \
-		parsing.c \
-		parsing_utils.c \
+SRC = src/main.c \
+		src/utils.c \
+		src/parsing/syntax_checker.c \
+		src/parsing/tokenization.c \
+		src/parsing/tokenization_utils.c \
+		src/parsing/parsing.c \
+		src/parsing/parsing_utils.c \
 
 OBJ = ${SRC:.c=.o}
 

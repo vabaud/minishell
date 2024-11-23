@@ -6,23 +6,11 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:26:17 by vabaud            #+#    #+#             */
-/*   Updated: 2024/11/22 20:58:13 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/11/23 18:53:56 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
-
-int	pwd(void)
-{
-	char	path[PATH_MAX];
-
-	if (getcwd(path, PATH_MAX))
-	{
-		ft_printf("%s\n", path);
-		return (1);
-	}
-	return (0);
-}
+#include "../include/minishell.h"
 
 int	main(void)
 {
@@ -46,4 +34,4 @@ int	main(void)
 }
 
 // test koo sadasd "[wa>""m''esm" < jesj | jesh >> hu
-/* Problemes avec in_quotes */
+/* Creer un fichier en cas de > et >> */

@@ -6,41 +6,37 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:00:58 by vabaud            #+#    #+#             */
-/*   Updated: 2024/11/22 20:00:49 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/11/23 18:30:33 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell.h"
+#include "../../include/minishell.h"
 
-void	parse_token(t_token *tokens)
+void	parse_token(t_token *token)
 {
 	t_command	*cmd;
 	t_command	*current;
-	t_token		*token;
 
 	cmd = NULL;
-    current = new_command();
-	token = tokens;
+	current = new_command();
 	while (token)
 	{
-        if (token->type == TOKEN_PIPE)
-        {
-            add_command(&cmd, current);
-            current = new_command();
-        }
-		else if (token->type == TOKEN_WORD)
+		if (token->type == TOKEN_PIPE)
 		{
-			add_arg(current, token->value);
+			add_command(&cmd, current);
+			current = new_command();
 		}
-		else if (token->type == TOKEN_REDIR_APPEND
-			|| token->type == TOKEN_REDIR_IN || token->type == TOKEN_REDIR_OUT)
-        {
-			set_redirection(current, token);
-            token = token->next;
-        }
+		else if (token->type == TOKEN_WORD)
+			add_arg(current, token->value);
+		else if (token->type >= 2 && token->type <= 4)
+		{
+			if (!set_redirection(current, token))
+				return ;
+			token = token->next;
+		}
 		token = token->next;
 	}
-    add_command(&cmd, current);
+	add_command(&cmd, current);
 	print_cmd(cmd);
 }
 
@@ -48,11 +44,9 @@ void	add_command(t_command **cmd, t_command *new_cmd)
 {
 	t_command	*last;
 
-    last = NULL;
+	last = NULL;
 	if ((*cmd) == NULL)
-    {
 		(*cmd) = new_cmd;
-    }
 	else
 	{
 		last = (*cmd);
@@ -83,10 +77,10 @@ void	add_arg(t_command *cmd, char *new_str)
 		new_arg[i] = ft_strdup(cmd->args[i]);
 		i--;
 	}
-    if (cmd->args)
-    {
-        free(cmd->args);
-    }
+	if (cmd->args)
+	{
+		free(cmd->args);
+	}
 	cmd->args = new_arg;
 }
 
@@ -112,7 +106,7 @@ int	set_input(t_command *cmd, char *file)
 	{
 		free(cmd->input_file);
 	}
-    cmd->input_file = ft_strdup(file);
+	cmd->input_file = remove_quotes(file);
 	if (!open(file, O_RDONLY))
 		return (0);
 	return (1);
@@ -120,17 +114,17 @@ int	set_input(t_command *cmd, char *file)
 
 int	set_out_or_append(t_command *cmd, char *file, t_token_type type)
 {
-    if (cmd->output_file)
-        free(cmd->output_file);
-    if (cmd->append_mode == 1 && type == TOKEN_REDIR_OUT)
-        cmd->append_mode = 0;
-    else if (type == TOKEN_REDIR_APPEND)
-        cmd->append_mode = 1;
-    cmd->output_file = ft_strdup(file);
-    if (!open(file, O_RDONLY))
-    {
-        return (0);
-    }
+	if (cmd->output_file)
+		free(cmd->output_file);
+	if (cmd->append_mode == 1 && type == TOKEN_REDIR_OUT)
+		cmd->append_mode = 0;
+	else if (type == TOKEN_REDIR_APPEND)
+		cmd->append_mode = 1;
+	cmd->output_file = remove_quotes(file);
+	if (!open(file, O_RDONLY))
+	{
+		return (0);
+	}
 	return (1);
 }
 

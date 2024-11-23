@@ -23,6 +23,8 @@
         "memory": "c",
         "random": "c",
         "vector": "c",
-        "minishell.h": "c"
+        "minishell.h": "c",
+        "readline.h": "c",
+        "limits.h": "c"
     }
 }

@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 18:08:44 by vabaud            #+#    #+#             */
-/*   Updated: 2024/03/26 15:24:39 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/11/25 15:00:15 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ long	ft_atoi(const char *str)
 	i = 0;
 	neg = 1;
 	res = 0;
-	while (str[i] == ' ' || str[i] == '\n' || str[i] == '\t' || str[i] == '\v'
-		|| str[i] == '\f' || str[i] == '\r')
+	while (str[i] == ' ' || str[i] == '\n' || str[i] == '\t'
+		|| str[i] == '\v' || str[i] == '\f' || str[i] == '\r')
 		i++;
 	if (str[i] == '-' || str[i] == '+')
 	{

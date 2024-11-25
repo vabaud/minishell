@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 20:13:26 by vabaud            #+#    #+#             */
-/*   Updated: 2024/11/23 18:30:48 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/11/25 15:04:21 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	handle_word(char *s, int i, t_token **token)
 			break ;
 		i++;
 	}
-    add_token(token, new_token(TOKEN_WORD, ft_substr(s, start, i - start)));
+	add_token(token, new_token(TOKEN_WORD, ft_substr(s, start, i - start)));
 	return (i);
 }
 
@@ -98,9 +98,8 @@ void	display_tokens(t_token *tokens)
 	while (token)
 	{
 		ft_printf("Token: \033[0;36m %s \033[0m |\t \
-			Type: \033[0;35m %s \033[0m \n",
-				token->value,
-				get_token_type_name(token->type));
+			Type: \033[0;35m %s \033[0m \n", token->value,
+			get_token_type_name(token->type));
 		ft_printf("--------------------------------------------------\n");
 		token = token->next;
 	}

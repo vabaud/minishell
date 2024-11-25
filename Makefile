@@ -12,10 +12,12 @@ SRC = src/main.c \
 		src/parsing/tokenization_utils.c \
 		src/parsing/parsing.c \
 		src/parsing/parsing_utils.c \
+		src/parsing/redirections.c \
+		src/builtins/pwd.c \
 
 OBJ = ${SRC:.c=.o}
 
-INCLUDE = libft/libft.a
+INCLUDE = include/libft/libft.a
 
 .c.o:
 	${CC} ${FLAGS} -c $< -o ${<:.c=.o}

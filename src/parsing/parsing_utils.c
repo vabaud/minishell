@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:02:04 by vabaud            #+#    #+#             */
-/*   Updated: 2024/11/23 18:30:29 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/11/25 14:57:47 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,26 +44,26 @@ void	print_cmd(t_command *commands)
 		ft_printf("Append Mode = %d\n", cmd->append_mode);
 		ft_printf("-----------------------------\n");
 		cmd = cmd->next;
-        i = -1;
+		i = -1;
 	}
 }
 
-void free_cmd(t_command *cmd)
+void	free_cmd(t_command *cmd)
 {
-    t_command *tmp;
-    int i;
+	t_command	*tmp;
+	int			i;
 
-    i = 0;
-    while (cmd)
-    {
-        tmp = cmd;
-        cmd = cmd->next;
-        while (tmp->args && tmp->args[i])
-            free(tmp->args[i++]);
-        if (tmp->args)
-            free(tmp->args);
-        free(tmp->input_file);
-        free(tmp->output_file);
-        free(tmp);
-    }
+	i = 0;
+	while (cmd)
+	{
+		tmp = cmd;
+		cmd = cmd->next;
+		while (tmp->args && tmp->args[i])
+			free(tmp->args[i++]);
+		if (tmp->args)
+			free(tmp->args);
+		free(tmp->input_file);
+		free(tmp->output_file);
+		free(tmp);
+	}
 }

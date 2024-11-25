@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:37:24 by vabaud            #+#    #+#             */
-/*   Updated: 2024/11/23 18:32:21 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/11/25 14:58:14 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include <stdio.h>
 # include <unistd.h>
 
-// Token type enumeration
 typedef enum e_token_type
 {
 	TOKEN_WORD,          // For commands and arguments
@@ -33,7 +32,6 @@ typedef enum e_token_type
 	TOKEN_ENV_VAR,       // For environment variables
 }						t_token_type;
 
-// Token structure
 typedef struct s_token
 {
 	t_token_type		type;
@@ -43,12 +41,11 @@ typedef struct s_token
 
 typedef struct s_command
 {
-	char **args;       // Liste des arguments de la commande
-	char *input_file;  // Redirection d'entrée (<)
-	char *output_file; // Redirection de sortie (>)
-	int append_mode;   // Mode ">>" pour redirection d'ajout
+	char				**args;
+	char				*input_file;
+	char				*output_file;
+	int					append_mode;
 	struct s_command	*next;
-	// Pointeur vers la commande suivante (en cas de pipe)
 }						t_command;
 
 int						main(void);

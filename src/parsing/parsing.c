@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:00:58 by vabaud            #+#    #+#             */
-/*   Updated: 2024/11/23 18:30:33 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/11/25 14:57:50 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,50 +82,6 @@ void	add_arg(t_command *cmd, char *new_str)
 		free(cmd->args);
 	}
 	cmd->args = new_arg;
-}
-
-int	set_redirection(t_command *cmd, t_token *token)
-{
-	if (token->type == TOKEN_REDIR_IN)
-	{
-		if (!set_input(cmd, token->next->value))
-			return (0);
-	}
-	else if (token->type == TOKEN_REDIR_OUT
-		|| token->type == TOKEN_REDIR_APPEND)
-	{
-		if (!set_out_or_append(cmd, token->next->value, token->type))
-			return (0);
-	}
-	return (1);
-}
-
-int	set_input(t_command *cmd, char *file)
-{
-	if (cmd->input_file)
-	{
-		free(cmd->input_file);
-	}
-	cmd->input_file = remove_quotes(file);
-	if (!open(file, O_RDONLY))
-		return (0);
-	return (1);
-}
-
-int	set_out_or_append(t_command *cmd, char *file, t_token_type type)
-{
-	if (cmd->output_file)
-		free(cmd->output_file);
-	if (cmd->append_mode == 1 && type == TOKEN_REDIR_OUT)
-		cmd->append_mode = 0;
-	else if (type == TOKEN_REDIR_APPEND)
-		cmd->append_mode = 1;
-	cmd->output_file = remove_quotes(file);
-	if (!open(file, O_RDONLY))
-	{
-		return (0);
-	}
-	return (1);
 }
 
 // void handle_heredoc(t_command *cmd, t_token *token)

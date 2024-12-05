@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 20:13:26 by vabaud            #+#    #+#             */
-/*   Updated: 2024/11/25 15:04:21 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/04 18:45:13 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ t_token	*tokenize_input(char *s)
 	token = NULL;
 	while (s[i])
 	{
-		while (ft_strchr(" \t\n", s[i]))
+		while (s[i] && ft_strchr(" \t\n", s[i]))
 			i++;
 		if (ft_strchr("><|", s[i]))
 			i = handle_special_chars(s, i, &token);
-		else
+		else if (s[i] != '\0')
 			i = handle_word(s, i, &token);
 	}
 	display_tokens(token);

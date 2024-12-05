@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 12:15:49 by vabaud            #+#    #+#             */
-/*   Updated: 2024/03/29 20:33:41 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/03 23:45:49 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,9 @@ size_t	ft_strlen(const char *s)
 	int	i;
 
 	i = 0;
-	while (*s)
+	while (s && s[i])
 	{
 		i++;
-		s++;
 	}
 	return (i);
 }

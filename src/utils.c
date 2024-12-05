@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:10:32 by vabaud            #+#    #+#             */
-/*   Updated: 2024/11/25 14:58:17 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/04 00:30:25 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,26 @@ char	*remove_quotes(char *s)
 	}
 	free(s);
 	return (new_str);
+}
+
+char	**env_cpy(char **env)
+{
+	char	**new_env;
+	int		i;
+
+	i = 0;
+	new_env = NULL;
+	while (env[i])
+		i++;
+	new_env = malloc(sizeof(char *) * (i + 1));
+	if (!new_env)
+		return (NULL);
+	i = 0;
+	while (env[i])
+	{
+		new_env[i] = ft_strdup(env[i]);
+		i++;
+	}
+	new_env[i] = ft_strdup("?=0");
+	return (new_env);
 }

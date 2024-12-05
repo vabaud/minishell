@@ -25,6 +25,7 @@
         "vector": "c",
         "minishell.h": "c",
         "readline.h": "c",
-        "limits.h": "c"
+        "limits.h": "c",
+        "libft.h": "c"
     }
 }

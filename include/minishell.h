@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:37:24 by vabaud            #+#    #+#             */
-/*   Updated: 2024/11/25 14:58:14 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/05 19:28:21 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,13 @@ typedef struct s_command
 	struct s_command	*next;
 }						t_command;
 
-int						main(void);
+typedef struct s_all
+{
+	t_command			*cmd;
+	char				**env;
+}						t_all;
+
+int						main(int ac, char **av, char **envp);
 int						pwd(void);
 int						has_unclosed_quotes(char *s);
 int						has_logical_operators(char *s);
@@ -62,18 +68,24 @@ const char				*get_token_type_name(t_token_type type);
 int						handle_word(char *s, int i, t_token **token);
 int						handle_special_chars(char *s, int i, t_token **token);
 t_token					*tokenize_input(char *s);
+void					free_token(t_token *token);
 int						in_quotes(char c);
 int						close_quotes(char c);
 char					*remove_quotes(char *str);
-void					parse_token(t_token *tokens);
+t_command				*parse_token(t_token *tokens, t_all *all);
 void					add_command(t_command **cmd, t_command *new_cmd);
 void					add_arg(t_command *cmd, char *new_str);
-int						set_redirection(t_command *cmd, t_token *token);
+int						set_redirection(t_command *cmd, t_token *token, t_all *all);
 int						set_input(t_command *cmd, char *file);
 int						set_out_or_append(t_command *cmd, char *file,
 							t_token_type type);
 t_command				*new_command(void);
 void					print_cmd(t_command *commands);
 void					free_cmd(t_command *cmd);
+char					**env_cpy(char **env);
+char					*replace_env(char *s, t_all *all);
+char					*env_value(char *s, char **env_tab);
+void					handle_heredoc(t_command *cmd, t_token *token,
+							t_all *all);
 
 #endif

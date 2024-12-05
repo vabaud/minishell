@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 19:25:48 by vabaud            #+#    #+#             */
-/*   Updated: 2024/11/25 15:02:42 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/03 20:18:03 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	has_unclosed_quotes(char *s)
 	t_quote = 0;
 	while (s[i])
 	{
-		if ((s[i] == '\'' || s[i] == '"') && s[i - 1] != '\\')
+		if ((s[i] == '\'' || s[i] == '"'))
 		{
 			if (s[i] == t_quote)
 				t_quote = 0;
@@ -75,8 +75,8 @@ int	has_invalid_redirections(char *s)
 		start++;
 	while ((s[end] == ' ' || s[end] == '\t') && end > 0)
 		end--;
-	if (s[start] == '>' || s[start] == '<' || s[end] == '>' || s[end] == '<')
-		return (1);
+	// if (s[start] == '>' || s[start] == '<' || s[end] == '>' || s[end] == '<')
+	// 	return (1);
 	while (s[start])
 	{
 		if ((s[start] == '>' || s[start] == '<') && (s[start + 1] == '>'

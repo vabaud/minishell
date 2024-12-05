@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:07:55 by vabaud            #+#    #+#             */
-/*   Updated: 2024/03/29 20:33:39 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/03 23:44:17 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBFT_H
 # include <stdarg.h>
 # include <stdlib.h>
+# include <stdio.h>
 # include <unistd.h>
 
 # ifndef BUFFER_SIZE
@@ -70,6 +71,8 @@ void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
+int					ft_strcmp(char *s1, char *s2);
+char				*ft_strjoin_and_free(char *s1, char *s2);
 
 char				*get_next_line(int fd);
 int					ft_check(char *s);

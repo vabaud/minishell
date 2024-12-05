@@ -14,6 +14,8 @@ SRC = src/main.c \
 		src/parsing/parsing_utils.c \
 		src/parsing/redirections.c \
 		src/builtins/pwd.c \
+		src/env_utils.c \
+		src/parsing/heredoc.c \
 
 OBJ = ${SRC:.c=.o}
 

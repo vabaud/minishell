@@ -6,19 +6,23 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 14:54:25 by vabaud            #+#    #+#             */
-/*   Updated: 2024/11/25 16:11:24 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/05 19:28:47 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	set_redirection(t_command *cmd, t_token *token)
+int	set_redirection(t_command *cmd, t_token *token, t_all *all)
 {
 	if (token->type == TOKEN_REDIR_IN)
 	{
 		if (!set_input(cmd, token->next->value))
 			return (0);
 	}
+    else if (token->type == TOKEN_REDIR_HEREDOC)
+    {
+        handle_heredoc(cmd, token, all);
+    }
 	else if (token->type == TOKEN_REDIR_OUT
 		|| token->type == TOKEN_REDIR_APPEND)
 	{
@@ -42,6 +46,9 @@ int	set_input(t_command *cmd, char *file)
 
 int	set_out_or_append(t_command *cmd, char *file, t_token_type type)
 {
+    int fd;
+
+    fd = 0;
 	if (cmd->output_file)
 		free(cmd->output_file);
 	if (cmd->append_mode == 1 && type == TOKEN_REDIR_OUT)
@@ -51,10 +58,16 @@ int	set_out_or_append(t_command *cmd, char *file, t_token_type type)
 	cmd->output_file = remove_quotes(file);
 	if (cmd->append_mode)
 	{
-		if (!open(file, O_CREAT | O_APPEND | O_RDWR))
+        fd = open(cmd->output_file, O_CREAT | O_RDWR | O_APPEND, 0644);
+		if (fd < 0)
 			return (0);
 	}
-	else if (!open(file, O_CREAT | O_RDWR | O_TRUNC))
-		return (0);
+    else
+    {
+        fd = open(cmd->output_file, O_CREAT | O_RDWR | O_TRUNC, 0644);
+        if (fd < 0)
+            return (0);
+    }
+    close(fd);
 	return (1);
 }

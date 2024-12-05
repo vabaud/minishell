@@ -6,7 +6,7 @@
 #    By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 18:29:32 by vabaud            #+#    #+#              #
-#    Updated: 2024/03/28 11:58:01 by vabaud           ###   ########.fr        #
+#    Updated: 2024/12/05 19:30:23 by vabaud           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,6 +59,8 @@ SRCS    		=	ft_isalnum.c \
                     ft_putunsignednbr.c \
                     ft_hexa.c \
 					ft_strcharadd.c \
+					ft_strcmp.c \
+					ft_strjoin_and_free.c \
 
 					
 

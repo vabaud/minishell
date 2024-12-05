@@ -6,13 +6,13 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:00:58 by vabaud            #+#    #+#             */
-/*   Updated: 2024/11/25 14:57:50 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/05 19:35:32 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	parse_token(t_token *token)
+t_command	*parse_token(t_token *token, t_all *all)
 {
 	t_command	*cmd;
 	t_command	*current;
@@ -21,6 +21,7 @@ void	parse_token(t_token *token)
 	current = new_command();
 	while (token)
 	{
+		token->value = remove_quotes(replace_env(token->value, all));
 		if (token->type == TOKEN_PIPE)
 		{
 			add_command(&cmd, current);
@@ -28,16 +29,17 @@ void	parse_token(t_token *token)
 		}
 		else if (token->type == TOKEN_WORD)
 			add_arg(current, token->value);
-		else if (token->type >= 2 && token->type <= 4)
+		else if (token->type >= 2 && token->type <= 5)
 		{
-			if (!set_redirection(current, token))
-				return ;
+			if (!set_redirection(current, token, all))
+				return (NULL);
 			token = token->next;
 		}
 		token = token->next;
 	}
 	add_command(&cmd, current);
 	print_cmd(cmd);
+	return (cmd);
 }
 
 void	add_command(t_command **cmd, t_command *new_cmd)
@@ -83,10 +85,3 @@ void	add_arg(t_command *cmd, char *new_str)
 	}
 	cmd->args = new_arg;
 }
-
-// void handle_heredoc(t_command *cmd, t_token *token)
-// {
-//     t_token *new_token;
-
-//     new_token = token;
-// }

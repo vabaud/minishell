@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:52:56 by vabaud            #+#    #+#             */
-/*   Updated: 2024/11/25 14:57:59 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/03 23:32:04 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,19 @@ void	add_token(t_token **token, t_token *new_token)
 		while (last->next != NULL)
 			last = last->next;
 		last->next = new_token;
+	}
+}
+
+void	free_token(t_token *token)
+{
+	t_token	*tmp;
+
+	while (token)
+	{
+		tmp = token;
+		token = token->next;
+		free(tmp->value);
+		free(tmp);
 	}
 }
 

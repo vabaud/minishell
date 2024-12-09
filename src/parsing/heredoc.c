@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 17:45:04 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/05 20:44:09 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/09 18:03:04 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	handle_heredoc(t_command *cmd, t_token *token, t_all *all)
 {
 	char	*delimiter;
-	char	*line;
+	char	*line = NULL;
 	int		change;
 	int		fd;
 
@@ -27,7 +27,15 @@ void	handle_heredoc(t_command *cmd, t_token *token, t_all *all)
 		change = 1;
 	while (1)
 	{
-        line = readline("> ");
+        ft_putstr_fd("> ", STDOUT_FILENO);
+        line = get_next_line(STDIN_FILENO);
+        if (!line)
+        {
+            write(1, "Heredoc: EOF detected\n", 23);
+            free(line);
+            break;
+        }
+        line[ft_strlen(line) - 1] = '\0';
         if (!ft_strcmp(delimiter, line))
             break;
         if (change == 1)

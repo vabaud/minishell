@@ -6,20 +6,24 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:26:17 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/03 23:38:07 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/09 18:02:50 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void print_env(char **env)
+int		g_received_signal = 0;
+
+void	print_env(char **env)
 {
-    int i = 0;
-    while (env[i])
-    {
-        printf("%s\n", env[i]);
-        i++;
-    }
+	int	i;
+
+	i = 0;
+	while (env[i])
+	{
+		printf("%s\n", env[i]);
+		i++;
+	}
 }
 
 int	main(int ac, char **av, char **envp)
@@ -29,14 +33,20 @@ int	main(int ac, char **av, char **envp)
 	t_all	*all;
 
 	token = NULL;
-    all = malloc(sizeof(t_all));
+	all = malloc(sizeof(t_all));
 	(void)av;
 	if (ac != 1)
 		return (0);
-    all->env = env_cpy(envp);
+    init_signals();
+	all->env = env_cpy(envp);
 	while (1)
 	{
 		str = readline("!!! shell> ");
+        if (!str)
+        {
+            write(1, "exit\n", 5);
+            break;
+        }
 		add_history(str);
 		if (str[0] == 'p')
 			pwd();
@@ -44,7 +54,7 @@ int	main(int ac, char **av, char **envp)
 			return (0);
 		token = tokenize_input(str);
 		all->cmd = parse_token(token, all);
-        printf("%s\n", token->value);
+		printf("%s\n", token->value);
 	}
 	return (0);
 }

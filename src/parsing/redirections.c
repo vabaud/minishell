@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 14:54:25 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/05 19:28:47 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/06 15:21:01 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	set_redirection(t_command *cmd, t_token *token, t_all *all)
 	else if (token->type == TOKEN_REDIR_OUT
 		|| token->type == TOKEN_REDIR_APPEND)
 	{
-		if (!set_out_or_append(cmd, token->next->value, token->type))
+		if (!set_out_or_append(cmd, token->next->value, token->type, all))
 			return (0);
 	}
 	return (1);
@@ -44,7 +44,7 @@ int	set_input(t_command *cmd, char *file)
 	return (1);
 }
 
-int	set_out_or_append(t_command *cmd, char *file, t_token_type type)
+int	set_out_or_append(t_command *cmd, char *file, t_token_type type, t_all *all)
 {
     int fd;
 
@@ -55,7 +55,7 @@ int	set_out_or_append(t_command *cmd, char *file, t_token_type type)
 		cmd->append_mode = 0;
 	else if (type == TOKEN_REDIR_APPEND)
 		cmd->append_mode = 1;
-	cmd->output_file = remove_quotes(file);
+	cmd->output_file = replace_env(remove_quotes(file), all);
 	if (cmd->append_mode)
 	{
         fd = open(cmd->output_file, O_CREAT | O_RDWR | O_APPEND, 0644);

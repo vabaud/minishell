@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:37:24 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/05 19:28:21 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/09 14:49:14 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@
 # include <limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <signal.h>
 # include <stdio.h>
+# include <stdlib.h>
 # include <unistd.h>
 
 typedef enum e_token_type
@@ -54,6 +56,8 @@ typedef struct s_all
 	char				**env;
 }						t_all;
 
+extern int				g_received_signal;
+
 int						main(int ac, char **av, char **envp);
 int						pwd(void);
 int						has_unclosed_quotes(char *s);
@@ -75,10 +79,11 @@ char					*remove_quotes(char *str);
 t_command				*parse_token(t_token *tokens, t_all *all);
 void					add_command(t_command **cmd, t_command *new_cmd);
 void					add_arg(t_command *cmd, char *new_str);
-int						set_redirection(t_command *cmd, t_token *token, t_all *all);
+int						set_redirection(t_command *cmd, t_token *token,
+							t_all *all);
 int						set_input(t_command *cmd, char *file);
 int						set_out_or_append(t_command *cmd, char *file,
-							t_token_type type);
+							t_token_type type, t_all *all);
 t_command				*new_command(void);
 void					print_cmd(t_command *commands);
 void					free_cmd(t_command *cmd);
@@ -87,5 +92,10 @@ char					*replace_env(char *s, t_all *all);
 char					*env_value(char *s, char **env_tab);
 void					handle_heredoc(t_command *cmd, t_token *token,
 							t_all *all);
+void					restore_sigint(void);
+void					sigaction_handle(void);
+void					init_signals(void);
+void					handle_sigquit(int signal);
+void					handle_sigint(int signal);
 
 #endif

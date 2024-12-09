@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hbouchel <hbouchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 14:32:42 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/09 17:12:54 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/09 19:55:02 by hbouchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*env_value(char *s, char **env_tab)
 
 	i = 0;
 	env = NULL;
-	while (env_tab[i])
+	while (env_tab[i][0] != '?')
 	{
 		j = 0;
 		while (env_tab[i][j] != '=')
@@ -85,9 +85,8 @@ char	*env_value(char *s, char **env_tab)
 	}
 	if (env == NULL)
 		env = "\0";
-	else
-		free(env);
-	free(s);
+	// if (s)
+		// free(s);
 	return (env);
 }
 
@@ -100,8 +99,9 @@ char	**change_env_value(char *env, char **env_tab, char *value)
 	i = 0;
 	j = 0;
 	tmp = NULL;
-	while (env_tab[i])
+	while (env_tab[i][0] != '?')
 	{
+		j = 0;
 		while (env_tab[i][j] != '=')
 			j++;
 		if (!ft_strncmp(env_tab[i], env, j))

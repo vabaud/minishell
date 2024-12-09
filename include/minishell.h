@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hbouchel <hbouchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:37:24 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/09 14:49:14 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/09 20:58:59 by hbouchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,10 @@ void					sigaction_handle(void);
 void					init_signals(void);
 void					handle_sigquit(int signal);
 void					handle_sigint(int signal);
+char					**change_env_value(char *env, char **env_tab,
+							char *value);
+void					ft_cd(char **env, t_command *cmd);
+int						val_numb(const char *str);
+void					ft_exit(char **args);
 
 #endif

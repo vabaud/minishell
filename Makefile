@@ -17,6 +17,8 @@ SRC = src/main.c \
 		src/env_utils.c \
 		src/parsing/heredoc.c \
 		src/signals.c \
+		src/builtins/cd.c \
+		src/builtins/exit.c \
 
 OBJ = ${SRC:.c=.o}
 

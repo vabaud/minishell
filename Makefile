@@ -13,12 +13,13 @@ SRC = src/main.c \
 		src/parsing/parsing.c \
 		src/parsing/parsing_utils.c \
 		src/parsing/redirections.c \
-		src/builtins/pwd.c \
+		src/builtins/ft_pwd.c \
 		src/env_utils.c \
 		src/parsing/heredoc.c \
 		src/signals.c \
-		src/builtins/cd.c \
-		src/builtins/exit.c \
+		src/builtins/ft_exitcd.c \
+		src/builtins/ft_exit.c \
+		src/builtins/ft_env.c \
 
 OBJ = ${SRC:.c=.o}
 

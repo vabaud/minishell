@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbouchel <hbouchel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:37:24 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/09 20:58:59 by hbouchel         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:04:48 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void					add_command(t_command **cmd, t_command *new_cmd);
 void					add_arg(t_command *cmd, char *new_str);
 int						set_redirection(t_command *cmd, t_token *token,
 							t_all *all);
-int						set_input(t_command *cmd, char *file);
+int						set_input(t_command *cmd, char *file, t_all *all);
 int						set_out_or_append(t_command *cmd, char *file,
 							t_token_type type, t_all *all);
 t_command				*new_command(void);

@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 14:54:25 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/06 15:21:01 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/10 16:04:35 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	set_redirection(t_command *cmd, t_token *token, t_all *all)
 {
 	if (token->type == TOKEN_REDIR_IN)
 	{
-		if (!set_input(cmd, token->next->value))
+		if (!set_input(cmd, token->next->value, all))
 			return (0);
 	}
     else if (token->type == TOKEN_REDIR_HEREDOC)
@@ -32,15 +32,18 @@ int	set_redirection(t_command *cmd, t_token *token, t_all *all)
 	return (1);
 }
 
-int	set_input(t_command *cmd, char *file)
+int	set_input(t_command *cmd, char *file, t_all *all)
 {
+    int fd = 0;
 	if (cmd->input_file)
 	{
 		free(cmd->input_file);
 	}
-	cmd->input_file = remove_quotes(file);
-	if (!open(file, O_RDONLY))
+	cmd->input_file = replace_env(remove_quotes(file), all);
+    fd = open(file, O_RDONLY);
+	if (fd < 0)
 		return (0);
+    close(fd);
 	return (1);
 }
 

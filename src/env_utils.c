@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 14:32:42 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/10 12:32:56 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/10 18:31:05 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,4 +114,32 @@ char	**change_env_value(char *env, char **env_tab, char *value)
 		i++;
 	}
 	return (env_tab);
+}
+
+void free_env(char **env)
+{
+    int i = 0;
+
+    while (env[i])
+    {
+        free(env[i]);
+        i++;
+    }
+    free(env);
+}
+
+void add_env(t_all *all, char *s)
+{
+    int i = 0;
+    char **new_env;
+    new_env = malloc(sizeof(char *) * (count_arg(all->env) + 2));
+    while (all->env[i])
+    {
+        new_env[i] = ft_strdup(all->env[i]);
+        i++;
+    }
+    new_env[i] = ft_strdup(s);
+    new_env[i] = NULL;
+    free_env(all->env);
+    all->env = new_env;
 }

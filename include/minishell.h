@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:37:24 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/10 17:04:26 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/10 17:40:03 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,7 @@ int						val_numb(const char *str);
 void					ft_exit(char **args);
 int						count_arg(char **params);
 void					ft_echo(t_command *cmd);
+void					free_env(char **env);
+void					remove_env(t_all *all, char *s);
 
 #endif

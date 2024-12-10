@@ -6,7 +6,7 @@
 /*   By: hbouchel <hbouchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:37:24 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/09 20:58:59 by hbouchel         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:06:54 by hbouchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,7 @@ char					**change_env_value(char *env, char **env_tab,
 void					ft_cd(char **env, t_command *cmd);
 int						val_numb(const char *str);
 void					ft_exit(char **args);
+int						count_arg(char **params);
+void					ft_echo(t_command *cmd);
 
 #endif

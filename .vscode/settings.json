@@ -26,6 +26,7 @@
         "minishell.h": "c",
         "readline.h": "c",
         "limits.h": "c",
-        "libft.h": "c"
+        "libft.h": "c",
+        "ft_echo": "cpp"
     }
 }

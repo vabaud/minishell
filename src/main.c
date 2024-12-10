@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:26:17 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/10 12:33:35 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/10 13:04:27 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	main(int ac, char **av, char **envp)
 	while (1)
 	{
 		str = readline("!!! shell> ");
-        if (!str)
+        if (!str || str[0] == '\0')
         {
             write(1, "exit\n", 5);
             break;

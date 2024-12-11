@@ -23,6 +23,8 @@ SRC = src/main.c \
 		src/builtins/ft_unset.c \
 		src/exec/exec.c \
 		src/exec/path.c \
+		src/exec/exec.c \
+		src/exec/path.c \
 		src/builtins/ft_export.c \
 
 OBJ = ${SRC:.c=.o}

@@ -21,6 +21,8 @@ SRC = src/main.c \
 		src/builtins/ft_exit.c \
 		src/builtins/ft_env.c \
 		src/builtins/ft_unset.c \
+		src/exec/exec.c \
+		src/exec/path.c \
 
 OBJ = ${SRC:.c=.o}
 

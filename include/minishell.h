@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:37:24 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/10 17:40:03 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/11 19:08:03 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_command
 	char				*output_file;
 	int					append_mode;
 	struct s_command	*next;
+	struct s_command	*prev;
 }						t_command;
 
 typedef struct s_all
@@ -106,5 +107,8 @@ int						count_arg(char **params);
 void					ft_echo(t_command *cmd);
 void					free_env(char **env);
 void					remove_env(t_all *all, char *s);
+void					exec_cmd(t_command *cmd, t_all *all);
+void					execute_pipeline(t_all *all);
+char					*get_path(char *cmd, char **env);
 
 #endif

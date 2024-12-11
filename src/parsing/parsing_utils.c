@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:02:04 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/08 17:12:01 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/11 19:05:19 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_command	*new_command(void)
 	cmd->output_file = NULL;
 	cmd->append_mode = 0;
 	cmd->next = NULL;
+    cmd->prev = NULL;
 	return (cmd);
 }
 

@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:00:58 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/08 17:26:44 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/11 19:05:18 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	add_command(t_command **cmd, t_command *new_cmd)
 		while (last->next != NULL)
 			last = last->next;
 		last->next = new_cmd;
+        last->next->prev = last;
 	}
 }
 

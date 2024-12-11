@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 14:32:42 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/10 18:31:05 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/11 20:28:58 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,17 @@ char	*replace_env(char *s, t_all *all)
 	i = 0;
 	start = 0;
 	str = NULL;
-	env = NULL;
 	while (s[i])
 	{
 		if (s[i] == '$' && !in_s_quote(s, i))
 		{
 			s[i++] = 'a';
-			start = i++;
-			while (ft_isalnum(s[i]))
+			start = i;
+			while (ft_isalnum(s[i]) || s[i] == '_')
 				i++;
 			env = env_value(ft_substr(s, start, i - start), all->env);
+            if (env[0] == '\0' && s[i++] == '?')
+                env = ft_itoa(all->exit_code);
 			str = ft_strjoin_and_free(str, env);
 		}
 		else if (s[i] != '\0')

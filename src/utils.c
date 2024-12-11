@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:10:32 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/10 12:32:17 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/11 19:47:57 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	**env_cpy(char **env)
 	new_env = NULL;
 	while (env[i])
 		i++;
-	new_env = malloc(sizeof(char *) * (i + 2));
+	new_env = malloc(sizeof(char *) * (i + 1));
 	if (!new_env)
 		return (NULL);
 	i = 0;
@@ -50,7 +50,6 @@ char	**env_cpy(char **env)
 		new_env[i] = ft_strdup(env[i]);
 		i++;
 	}
-	new_env[i++] = ft_strdup("?=0");
     new_env[i] = NULL;
 	return (new_env);
 }

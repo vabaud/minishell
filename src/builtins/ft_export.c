@@ -4,12 +4,12 @@ int valid_indentifier(const char *str)
 {
     int i;
 
-    if(!str || (!ft_isalpha(str[0]) && str[0] != '_'))
+    if(!str || !ft_isalpha(str[0]) || str[0] != '_')
         return(0);
     i = 1;
     while(str[i] && str[i] != '=')
     {
-        if(!ft_isalnum(str[i]) && str[i] != '_')
+        if(!ft_isalnum(str[i]) || str[i] != '_')
             return(0);
         i++;
     }
@@ -17,29 +17,39 @@ int valid_indentifier(const char *str)
 }
 
 
+int browse_env(char **env, const char *var, char *name, int name_len)
+{
+    int i; 
+
+    i = 0;
+    while(env[i])
+    {
+        if(ft_strncmp(env[i], name, name_len) == 0 && env[i][name_len] == '=')
+        {
+            free(env[i]);
+            env[i] = ft_strdup(var);
+            free(name);
+            return 1;
+        }
+        i++;
+    }   
+    return(0);
+}
+
 void add_n_up_env(t_all *all, const char *var)
 {
     int i;
     int name_len;
-    int *name;
-    int **new_env;
+    char *name;
+    char **new_env;
 
+    i = 0;
     name_len = 0;
     while(var[name_len] && var[name_len] != '=')
         name_len++;
     name = ft_substr(var, 0, name_len);
-    i = 0;
-    while(all->env[i])
-    {
-        if(ft_strncmp(all->env[i], name, name_len) == 0 && all->env[i][name_len] == '=')
-        {
-            free(all->env[i]);
-            all->env[i] = ft_strdup(var);
-            free(name);
-            return;
-        }
-        i++;
-    }
+    if (browse_env(all->env, var, name, name_len))
+        return ;
     new_env = malloc(sizeof(char *) * (i + 2));
     i = 0;
     while(all->env[i])
@@ -69,8 +79,8 @@ void ft_export(t_all *all, char **args)
         }
         return;
     }
-    i = 0;
-    while(args[i])
+    i = -1;
+    while(args[++i])
     {
         if(valid_indentifier(args[i]))
             add_n_up_env(all, args[i]);
@@ -80,6 +90,5 @@ void ft_export(t_all *all, char **args)
             ft_putstr_fd(args[i], STDERR_FILENO);
 			ft_putchar_fd('\n', STDERR_FILENO);
         }
-        i++;
     }
 }

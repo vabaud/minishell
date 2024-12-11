@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hbouchel <hbouchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:37:24 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/11 19:13:29 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/11 19:20:56 by hbouchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,9 @@ void					exec_cmd(t_command *cmd, t_all *all);
 char					*get_path(char *cmd, char **env);
 void					ft_unset(t_all *all, char **args);
 int						valid_indentifier(const char *str);
+void					add_n_up_env(t_all *all, const char *var);
+int						browse_env(char **env, const char *var, char *name,
+							int name_len);
+void					ft_export(t_all *all, char **args);
 
 #endif

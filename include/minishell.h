@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:37:24 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/11 19:12:41 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/11 19:13:29 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ typedef struct s_command
 	char				*output_file;
 	int					append_mode;
 	struct s_command	*next;
-	struct s_command	*prev;
 	struct s_command	*prev;
 }						t_command;
 

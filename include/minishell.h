@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hbouchel <hbouchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:37:24 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/10 17:40:03 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/11 16:37:19 by hbouchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,7 @@ int						count_arg(char **params);
 void					ft_echo(t_command *cmd);
 void					free_env(char **env);
 void					remove_env(t_all *all, char *s);
+void					ft_unset(t_all *all, char **args);
+int						valid_indentifier(const char *str);
 
 #endif

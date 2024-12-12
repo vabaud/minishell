@@ -6,11 +6,29 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:14:08 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/11 19:20:43 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/12 16:15:12 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+void	wait_children(pid_t *pids, int i, t_all *all)
+{
+	int	j;
+	int	status;
+
+	status = 0;
+	j = 0;
+	while (j < i)
+	{
+		waitpid(pids[j], &status, 0);
+		if (WIFEXITED(status))
+			all->exit_code = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			all->exit_code = 128 + WTERMSIG(status);
+		j++;
+	}
+}
 
 void	redirect_input(const char *file)
 {
@@ -47,17 +65,19 @@ void	execute_pipeline(t_all *all)
 {
 	int			pipe_fd[2];
 	int			prev_pipe_fd;
-	int			pid;
 	t_command	*cmd;
+    pid_t *pid;
+    int i = 0;
 
 	prev_pipe_fd = -1;
 	cmd = all->cmd;
+    pid = malloc(sizeof(pid_t) * ft_cmdsize(all->cmd));
 	while (cmd)
 	{
 		if (cmd->next)
 			pipe(pipe_fd);
-		pid = fork();
-		if (pid == 0)
+		pid[i] = fork();
+		if (pid[i] == 0)
 		{
 			if (cmd->input_file)
 				redirect_input(cmd->input_file);
@@ -86,7 +106,9 @@ void	execute_pipeline(t_all *all)
 			prev_pipe_fd = pipe_fd[0];
 		}
 		cmd = cmd->next;
+        i++;
 	}
+    wait_children(pid, i, all);
 }
 
 void exec_cmd(t_command *cmd, t_all *all)

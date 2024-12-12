@@ -6,11 +6,24 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:10:32 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/11 19:47:57 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/12 16:14:43 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int	ft_cmdsize(t_command *lst)
+{
+	int	i;
+
+	i = 0;
+	while (lst != NULL)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
+}
 
 char	*remove_quotes(char *s)
 {

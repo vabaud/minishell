@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:26:17 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/11 20:32:44 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/12 16:00:12 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,7 @@ int	main(int ac, char **av, char **envp)
 			return (0);
 		token = tokenize_input(str);
 		all->cmd = parse_token(token, all);
-		printf("%s\n", token->value);
-		pwd();
-		if (str[0] == 'e')
-			ft_exit(all->cmd->args);
-		pwd();
+        execute_pipeline(all);
 	}
 	return (0);
 }

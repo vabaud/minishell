@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 14:32:42 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/11 20:28:58 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/12 15:59:19 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	*env_value(char *s, char **env_tab)
 		if (!ft_strncmp(env_tab[i], s, j))
 		{
 			j++;
-			env = ft_substr(env_tab[i], j, ft_strlen(env_tab[j]) - 1);
+			env = ft_substr(env_tab[i], j, ft_strlen(env_tab[i]) - 1);
 		}
 		i++;
 	}

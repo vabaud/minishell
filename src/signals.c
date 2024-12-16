@@ -38,3 +38,21 @@ void	restore_sigint(void)
 	sa.sa_handler = handle_sigint;
 	sigaction(SIGINT, &sa, NULL);
 }
+
+void setup_interactive_signals()
+{
+	struct sigaction sa;
+
+	sa.sa_handler = handle_sigint;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = SA_RESTART;
+
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &(struct sigaction){.sa_handler = SIG_IGN}, NULL);
+}
+
+void setup_child_process_signals(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+}

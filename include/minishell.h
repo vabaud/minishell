@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbouchel <hbouchel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:37:24 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/17 18:06:26 by hbouchel         ###   ########.fr       */
+/*   Updated: 2024/12/17 20:11:42 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void					handle_sigquit(int signal);
 void					handle_sigint(int signal);
 char					**change_env_value(char *env, char **env_tab,
 							char *value);
-char**					ft_cd(char **env, t_command *cmd);
+void					ft_cd(t_all *all, t_command *cmd);
 int						val_numb(const char *str);
 int					ft_exit(char **args);
 int						count_arg(char **params);
@@ -128,5 +128,6 @@ int						execute_builtins(t_all *all, t_command *cmd);
 int						ft_env(char **env, t_command *cmd);
 void					setup_interactive_signals(void);
 void					setup_child_process_signals(void);
+int						is_builtin(t_command *cmd);
 
 #endif

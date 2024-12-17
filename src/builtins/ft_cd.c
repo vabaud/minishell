@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:28:42 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/17 18:07:41 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/17 20:11:12 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,30 +22,23 @@ int	count_arg(char **params)
 	return (count);
 }
 
-char **ft_cd(char **env, t_command *cmd)
+void	ft_cd(t_all *all, t_command *cmd)
 {
 	char    *path;
     char    oldpwd[PATH_MAX];
     char    pwd[PATH_MAX];
 
-    if (count_arg(cmd->args) > 2)
-        return (fprintf(stderr, "cd: too many arguments\n"), env);
-    if (!getcwd(oldpwd, PATH_MAX))
-        return (perror("getcwd"), env);
-    if (!cmd->args[1] || ft_strcmp(cmd->args[1], "~") == 0)
-        path = env_value("HOME", env);
-    else if (ft_strcmp(cmd->args[1], "-") == 0)
-    {
-        if (!(path = env_value("OLDPWD", env)))
-            return (fprintf(stderr, "cd: OLDPWD not set\n"), env);
-        printf("%s\n", path);
-    }
-    else
-        path = cmd->args[1];
-    if (chdir(path) == -1)
-        return (perror("cd"), env);
-    env = change_env_value("OLDPWD", env, oldpwd);
-    if (getcwd(pwd, PATH_MAX))
-        env = change_env_value("PWD", env, pwd);
-    return env;
+	path = NULL;
+	getcwd(oldpwd, PATH_MAX);
+	if (count_arg(cmd->args) > 2)
+		return ;
+	if (!cmd->args[1] || ft_strcmp(cmd->args[1], "~") == 0)
+		path = env_value("HOME", all->env);
+	else
+		path = cmd->args[1];
+	if (chdir(path) == -1)
+		return ;
+	all->env = change_env_value("OLDPWD", all->env, oldpwd);
+	getcwd(pwd, PATH_MAX);
+	all->env = change_env_value("PWD", all->env, pwd);
 }

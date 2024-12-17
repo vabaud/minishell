@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:00:58 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/16 17:48:29 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/17 19:50:49 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_command	*parse_token(t_token *token, t_all *all)
 		token = token->next;
 	}
 	add_command(&cmd, current);
-	print_cmd(cmd);
+	// print_cmd(cmd);
 	return (cmd);
 }
 

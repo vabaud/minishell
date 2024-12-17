@@ -6,11 +6,33 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:16:38 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/17 18:08:16 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/17 20:12:00 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int is_builtin(t_command *cmd)
+{
+    if (!cmd->args[0])
+        return (0);
+
+    if (ft_strcmp(cmd->args[0], "echo") == 0)
+        return (1);
+    else if (ft_strcmp(cmd->args[0], "cd") == 0)
+        return (1);
+    else if (ft_strcmp(cmd->args[0], "pwd") == 0)
+        return (1);
+    else if (ft_strcmp(cmd->args[0], "export") == 0)
+        return (1);
+    else if (ft_strcmp(cmd->args[0], "unset") == 0)
+        return (1);
+    else if (ft_strcmp(cmd->args[0], "env") == 0)
+        return (1);
+    else if (ft_strcmp(cmd->args[0], "exit") == 0)
+        return (1);
+    return (0);
+}
 
 int execute_builtins(t_all *all, t_command *cmd)
 {
@@ -21,7 +43,8 @@ int execute_builtins(t_all *all, t_command *cmd)
         return (ft_echo(cmd), 1);
     else if (ft_strcmp(cmd->args[0], "cd") == 0)
     {
-        all->env = ft_cd(all->env, cmd);
+        ft_cd(all, cmd);
+        // print_env(all->env);
         return (1);
     }
     else if (ft_strcmp(cmd->args[0], "pwd") == 0)
@@ -31,7 +54,7 @@ int execute_builtins(t_all *all, t_command *cmd)
     else if (ft_strcmp(cmd->args[0], "unset") == 0)
         return (ft_unset(all, cmd->args), 1);
     else if (ft_strcmp(cmd->args[0], "env") == 0)
-        return (ft_env(all->env, cmd));
+        return (ft_env(all->env, cmd), 1);
     else if (ft_strcmp(cmd->args[0], "exit") == 0)
         return (ft_exit(cmd->args), 1);
 

@@ -6,7 +6,7 @@
 #    By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/26 18:29:32 by vabaud            #+#    #+#              #
-#    Updated: 2024/12/05 19:30:23 by vabaud           ###   ########.fr        #
+#    Updated: 2024/12/17 20:07:06 by vabaud           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -92,3 +92,5 @@ bonus:			$(OBJS) $(BONUS_OBJS)
 re: fclean ${NAME}
 
 .PHONY: all, clean, fclean, re	
+
+.SILENT:

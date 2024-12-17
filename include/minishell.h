@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:37:24 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/12 16:16:07 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/16 18:52:39 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,5 +121,7 @@ int						browse_env(char **env, const char *var, char *name,
 void					ft_export(t_all *all, char **args);
 void					print_env(char **env);
 int						ft_cmdsize(t_command *lst);
+void	handle_sigquit(int signal);
+void	heredoc_handler(int signum);
 
 #endif

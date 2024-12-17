@@ -6,21 +6,36 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 14:53:23 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/09 14:49:05 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/16 18:52:33 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+void	heredoc_handler(int signum)
+{
+	if (signum == SIGINT)
+	{
+		g_received_signal = 130;
+		write(1, "\n", 1);
+	}
+}
+
 void handle_sigint(int signal)
 {
     (void)signal;
-
-    ft_putstr_fd("\n", STDERR_FILENO);
+    g_received_signal = 130;
+    write(STDERR_FILENO, "\n", 1);
     rl_on_new_line();
     rl_replace_line("", 0);
     rl_redisplay();
-    g_received_signal = 130;
+}
+
+void	handle_sigquit(int signal)
+{
+	(void)signal;
+	g_received_signal = 131;
+	ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
 }
 
 void	init_signals(void)

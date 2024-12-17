@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:14:08 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/12 16:15:12 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/16 19:11:31 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,18 @@ void	execute_pipeline(t_all *all)
 
 	prev_pipe_fd = -1;
 	cmd = all->cmd;
+    signal(SIGINT, SIG_IGN);
     pid = malloc(sizeof(pid_t) * ft_cmdsize(all->cmd));
 	while (cmd)
 	{
+        if (isatty(0))
+            signal(SIGQUIT, handle_sigquit);
 		if (cmd->next)
 			pipe(pipe_fd);
 		pid[i] = fork();
 		if (pid[i] == 0)
 		{
+            signal(SIGINT, handle_sigint);
 			if (cmd->input_file)
 				redirect_input(cmd->input_file);
 			else if (cmd->prev)
@@ -109,6 +113,8 @@ void	execute_pipeline(t_all *all)
         i++;
 	}
     wait_children(pid, i, all);
+    restore_sigint();
+    signal(SIGQUIT, SIG_IGN);
 }
 
 void exec_cmd(t_command *cmd, t_all *all)

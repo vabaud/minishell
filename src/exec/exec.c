@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:14:08 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/16 19:11:31 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/17 15:34:37 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,10 +122,11 @@ void exec_cmd(t_command *cmd, t_all *all)
     char *path;
 
     path = get_path(cmd->args[0], all->env);
-    // if (is_bultin(cmd))
-    //     exec_builtin(cmd, all);
-    // else
-    // {
-    execve(path, cmd->args, all->env);
-    // }
+    if (execute_builtins(all, cmd))
+        return;
+    else
+    {
+        execve(path, cmd->args, all->env);
+    }
+    free(path);
 }

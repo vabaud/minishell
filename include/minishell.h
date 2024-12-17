@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:37:24 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/16 18:52:39 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/17 15:35:22 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 # include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <unistd.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <unistd.h>
 
 typedef enum e_token_type
 {
@@ -119,9 +119,12 @@ void					add_n_up_env(t_all *all, const char *var);
 int						browse_env(char **env, const char *var, char *name,
 							int name_len);
 void					ft_export(t_all *all, char **args);
+int						ft_pwd(void);
 void					print_env(char **env);
 int						ft_cmdsize(t_command *lst);
-void	handle_sigquit(int signal);
-void	heredoc_handler(int signum);
+void					handle_sigquit(int signal);
+void					heredoc_handler(int signum);
+int						execute_builtins(t_all *all, t_command *cmd);
+int						ft_env(char **env, t_command *cmd);
 
 #endif

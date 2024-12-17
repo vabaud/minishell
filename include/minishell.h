@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hbouchel <hbouchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:37:24 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/17 15:40:52 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/17 17:42:30 by hbouchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,22 +103,22 @@ void					handle_sigquit(int signal);
 void					handle_sigint(int signal);
 char					**change_env_value(char *env, char **env_tab,
 							char *value);
-void					ft_cd(char **env, t_command *cmd);
+int					ft_cd(char **env, t_command *cmd);
 int						val_numb(const char *str);
-void					ft_exit(char **args);
+int					ft_exit(char **args);
 int						count_arg(char **params);
-void					ft_echo(t_command *cmd);
+int					ft_echo(t_command *cmd);
 void					free_env(char **env);
 void					remove_env(t_all *all, char *s);
 void					execute_pipeline(t_all *all);
 void					exec_cmd(t_command *cmd, t_all *all);
 char					*get_path(char *cmd, char **env);
-void					ft_unset(t_all *all, char **args);
+int					ft_unset(t_all *all, char **args);
 int						valid_indentifier(const char *str);
-void					add_n_up_env(t_all *all, const char *var);
+int					add_n_up_env(t_all *all, const char *var);
 int						browse_env(char **env, const char *var, char *name,
 							int name_len);
-void					ft_export(t_all *all, char **args);
+int					ft_export(t_all *all, char **args);
 int						ft_pwd(void);
 void					print_env(char **env);
 int						ft_cmdsize(t_command *lst);

@@ -36,7 +36,7 @@ int browse_env(char **env, const char *var, char *name, int name_len)
     return(0);
 }
 
-void add_n_up_env(t_all *all, const char *var)
+int add_n_up_env(t_all *all, const char *var)
 {
     int i;
     int name_len;
@@ -64,7 +64,7 @@ void add_n_up_env(t_all *all, const char *var)
     free(name);
 }
 
-void ft_export(t_all *all, char **args)
+int ft_export(t_all *all, char **args)
 {
     int i;
 

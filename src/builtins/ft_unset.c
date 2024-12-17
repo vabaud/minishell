@@ -28,7 +28,7 @@ void	remove_env(t_all *all, char *s)
 	all->env = new_env;
 }
 
-void	ft_unset(t_all *all, char **args)
+int	ft_unset(t_all *all, char **args)
 {
 	int	i;
 

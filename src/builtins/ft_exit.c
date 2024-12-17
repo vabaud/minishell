@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hbouchel <hbouchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 17:51:16 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/12 12:18:38 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/17 17:41:46 by hbouchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	val_numb(const char *str)
 	return (1);
 }
 
-void	ft_exit(char **args)
+int	ft_exit(char **args)
 {
 	int i = 0;
 

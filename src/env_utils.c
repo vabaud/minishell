@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 14:32:42 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/12 15:59:19 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/17 17:33:09 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ char	**change_env_value(char *env, char **env_tab, char *value)
 	int		i;
 	int		j;
 	char	*tmp;
+    char **new_env;
 
 	i = 0;
 	j = 0;
@@ -114,13 +115,17 @@ char	**change_env_value(char *env, char **env_tab, char *value)
 		}
 		i++;
 	}
-	return (env_tab);
+    new_env = env_cpy(env_tab);
+    free_env(env_tab);
+	return (new_env);
 }
 
 void free_env(char **env)
 {
     int i = 0;
 
+    if (!env)
+        return;
     while (env[i])
     {
         free(env[i]);

@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:26:17 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/12 16:00:12 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/17 15:41:05 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	main(int ac, char **av, char **envp)
 	all->env = env_cpy(envp);
 	while (1)
 	{
+        setup_interactive_signals();
 		str = readline("!!! shell> ");
         if (!str || str[0] == '\0')
         {

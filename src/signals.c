@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 14:53:23 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/16 18:52:33 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/17 16:01:29 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void setup_interactive_signals()
 	sa.sa_flags = SA_RESTART;
 
 	sigaction(SIGINT, &sa, NULL);
-	sigaction(SIGQUIT, &(struct sigaction){.sa_handler = SIG_IGN}, NULL);
+	// sigaction(SIGQUIT, &(struct sigaction){.sa_handler = SIG_IGN}, NULL);
 }
 
 void setup_child_process_signals(void)

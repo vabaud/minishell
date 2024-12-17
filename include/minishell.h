@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:37:24 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/17 15:35:22 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/17 15:40:52 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,5 +126,7 @@ void					handle_sigquit(int signal);
 void					heredoc_handler(int signum);
 int						execute_builtins(t_all *all, t_command *cmd);
 int						ft_env(char **env, t_command *cmd);
+void					setup_interactive_signals(void);
+void					setup_child_process_signals(void);
 
 #endif

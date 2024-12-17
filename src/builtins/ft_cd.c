@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbouchel <hbouchel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:28:42 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/09 19:55:55 by hbouchel         ###   ########.fr       */
+/*   Updated: 2024/12/17 15:42:12 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	ft_cd(char **env, t_command *cmd)
 		path = cmd->args[1];
 	if (chdir(path) == -1)
 		return ;
+    printf("%s\n", path);
 	env = change_env_value("OLDPWD", env, oldpwd);
 	getcwd(pwd, PATH_MAX);
 	env = change_env_value("PWD", env, pwd);

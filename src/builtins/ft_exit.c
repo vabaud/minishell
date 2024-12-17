@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbouchel <hbouchel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 17:51:16 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/17 17:41:46 by hbouchel         ###   ########.fr       */
+/*   Updated: 2024/12/17 18:09:52 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	ft_exit(char **args)
 			if(args[2])
 			{
 				ft_putstr_fd("exit, trop d'arguemnts\n", STDOUT_FILENO);
-				return;
+				return 0;
 			}
 			exit(i);
 		}
@@ -54,4 +54,5 @@ int	ft_exit(char **args)
 		}
 	}
 	exit(0);
+    return 1;
 }

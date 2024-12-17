@@ -35,13 +35,13 @@ int	ft_unset(t_all *all, char **args)
 	if (!args || !args[0])
 	{
 		ft_putstr_fd("unset: pas assez d'arguments\n", STDOUT_FILENO);
-		return ;
+		return 0;
 	}
 	i = 1;
 	while (args[i])
 	{
-        printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
 		remove_env(all, args[i]); // appeler rm_env pour chaque args
 		i++;
 	}
+    return 1;
 }

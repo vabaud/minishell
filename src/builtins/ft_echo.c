@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbouchel <hbouchel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:25:24 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/17 17:40:27 by hbouchel         ###   ########.fr       */
+/*   Updated: 2024/12/17 18:08:43 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,5 @@ int	ft_echo(t_command *cmd)
 	}
 	if (newline)
 		ft_printf("\n");
+    return 1;
 }

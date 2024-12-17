@@ -49,7 +49,7 @@ int add_n_up_env(t_all *all, const char *var)
         name_len++;
     name = ft_substr(var, 0, name_len);
     if (browse_env(all->env, var, name, name_len))
-        return ;
+        return 0;
     new_env = malloc(sizeof(char *) * (i + 2));
     i = 0;
     while(all->env[i])
@@ -62,6 +62,7 @@ int add_n_up_env(t_all *all, const char *var)
     free(all->env);
     all->env = new_env;
     free(name);
+    return 1;
 }
 
 int ft_export(t_all *all, char **args)
@@ -77,7 +78,7 @@ int ft_export(t_all *all, char **args)
             ft_putstr_fd(all->env[i], STDOUT_FILENO);
             ft_putchar_fd('\n', STDOUT_FILENO);
         }
-        return;
+        return 0;;
     }
     i = -1;
     while(args[++i])
@@ -91,4 +92,5 @@ int ft_export(t_all *all, char **args)
 			ft_putchar_fd('\n', STDERR_FILENO);
         }
     }
+    return 1;
 }

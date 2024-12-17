@@ -6,7 +6,7 @@
 /*   By: hbouchel <hbouchel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:37:24 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/17 17:42:30 by hbouchel         ###   ########.fr       */
+/*   Updated: 2024/12/17 18:06:26 by hbouchel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void					handle_sigquit(int signal);
 void					handle_sigint(int signal);
 char					**change_env_value(char *env, char **env_tab,
 							char *value);
-int					ft_cd(char **env, t_command *cmd);
+char**					ft_cd(char **env, t_command *cmd);
 int						val_numb(const char *str);
 int					ft_exit(char **args);
 int						count_arg(char **params);

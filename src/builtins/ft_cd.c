@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:28:42 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/17 15:42:12 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/17 19:08:53 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	count_arg(char **params)
 	return (count);
 }
 
-void	ft_cd(char **env, t_command *cmd)
+void	ft_cd(t_all *all, t_command *cmd)
 {
 	char	*path;
 	char	oldpwd[PATH_MAX];
@@ -33,13 +33,12 @@ void	ft_cd(char **env, t_command *cmd)
 	if (count_arg(cmd->args) > 2)
 		return ;
 	if (!cmd->args[1] || ft_strcmp(cmd->args[1], "~") == 0)
-		path = env_value("HOME", env);
+		path = env_value("HOME", all->env);
 	else
 		path = cmd->args[1];
 	if (chdir(path) == -1)
 		return ;
-    printf("%s\n", path);
-	env = change_env_value("OLDPWD", env, oldpwd);
+	all->env = change_env_value("OLDPWD", all->env, oldpwd);
 	getcwd(pwd, PATH_MAX);
-	env = change_env_value("PWD", env, pwd);
+	all->env = change_env_value("PWD", all->env, pwd);
 }

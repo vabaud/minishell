@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:14:08 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/17 16:40:08 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/17 19:09:03 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,36 +79,41 @@ void	execute_pipeline(t_all *all)
             signal(SIGQUIT, handle_sigquit);
 		if (cmd->next)
 			pipe(pipe_fd);
-		pid[i] = fork();
-		if (pid[i] == 0)
-		{
-            signal(SIGINT, handle_sigint);
-			if (cmd->input_file)
-				redirect_input(cmd->input_file);
-			else if (cmd->prev)
-			{
-				dup2(prev_pipe_fd, STDIN_FILENO);
-				close(prev_pipe_fd);
-			}
-			if (cmd->output_file)
-				redirect_output(cmd->output_file, cmd->append_mode);
-			else if (cmd->next)
-			{
-				dup2(pipe_fd[1], STDOUT_FILENO);
-				close(pipe_fd[0]);
-				close(pipe_fd[1]);
-			}
-			exec_cmd(cmd, all);
-			exit(0);
-		}
-		else
-		{
-			if (prev_pipe_fd != -1)
-				close(prev_pipe_fd);
-			if (cmd->next)
-				close(pipe_fd[1]);
-			prev_pipe_fd = pipe_fd[0];
-		}
+        if (is_builtin(cmd) && !cmd->prev && !cmd->next)
+            execute_builtins(all, cmd);
+        else
+        {
+            pid[i] = fork();
+            if (pid[i] == 0)
+            {
+                signal(SIGINT, handle_sigint);
+                if (cmd->input_file)
+                    redirect_input(cmd->input_file);
+                else if (cmd->prev)
+                {
+                    dup2(prev_pipe_fd, STDIN_FILENO);
+                    close(prev_pipe_fd);
+                }
+                if (cmd->output_file)
+                    redirect_output(cmd->output_file, cmd->append_mode);
+                else if (cmd->next)
+                {
+                    dup2(pipe_fd[1], STDOUT_FILENO);
+                    close(pipe_fd[0]);
+                    close(pipe_fd[1]);
+                }
+                exec_cmd(cmd, all);
+                exit(0);
+            }
+            else
+            {
+                if (prev_pipe_fd != -1)
+                    close(prev_pipe_fd);
+                if (cmd->next)
+                    close(pipe_fd[1]);
+                prev_pipe_fd = pipe_fd[0];
+            }
+        }
 		cmd = cmd->next;
         i++;
 	}
@@ -121,11 +126,14 @@ void exec_cmd(t_command *cmd, t_all *all)
 {
     char *path;
 
-    path = get_path(cmd->args[0], all->env);
-    if (execute_builtins(all, cmd))
-        return;
+    if (is_builtin(cmd))
+    {
+        if (!execute_builtins(all, cmd))
+            return;
+    }
     else
     {
+        path = get_path(cmd->args[0], all->env);
         execve(path, cmd->args, all->env);
     }
     free(path);

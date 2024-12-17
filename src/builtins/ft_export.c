@@ -76,6 +76,7 @@ void ft_export(t_all *all, char **args)
             ft_putstr_fd("declarer -x", STDOUT_FILENO);
             ft_putstr_fd(all->env[i], STDOUT_FILENO);
             ft_putchar_fd('\n', STDOUT_FILENO);
+            i++;
         }
         return;
     }

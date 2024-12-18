@@ -1,8 +1,8 @@
 NAME = minishell
 CC = gcc
 RM = rm -f
-FLAGS = -Wall -Wextra -Werror
-LDFLAGS = -lreadline
+FLAGS = -Wall -Wextra -Werror -I/opt/homebrew/opt/readline/include
+LDFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline
 LIBFTDIR = include/libft/
 
 SRC = src/main.c \

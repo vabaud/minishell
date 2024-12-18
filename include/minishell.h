@@ -16,10 +16,10 @@
 # include "libft/libft.h"
 # include <fcntl.h>
 # include <limits.h>
+# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -127,5 +127,7 @@ int						execute_builtins(t_all *all, t_command *cmd);
 int						ft_env(char **env, t_command *cmd);
 int						is_builtin(t_command *cmd);
 int						syntax_token(t_token *token);
+void	sort_tab(char **env);
+void print_var(char *env, char **env_tab);
 
 #endif

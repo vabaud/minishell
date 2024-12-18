@@ -68,15 +68,17 @@ int add_n_up_env(t_all *all, const char *var)
 int ft_export(t_all *all, char **args)
 {
     int i;
+    char **new_env;
+
+    new_env = all->env;
 
     if(!args || args[0])
     {
         i = 0;
-        while(all->env[i])
+        sort_tab(new_env);
+        while(new_env[i])
         {
-            ft_putstr_fd("declarer -x", STDOUT_FILENO);
-            ft_putstr_fd(all->env[i], STDOUT_FILENO);
-            ft_putchar_fd('\n', STDOUT_FILENO);
+            print_var(new_env[i], new_env);
             i++;
         }
         return 0;;
@@ -94,4 +96,31 @@ int ft_export(t_all *all, char **args)
         }
     }
     return 1;
+}
+
+void	sort_tab(char **env)
+{
+	int		i;
+	int		swapped;
+	char	*temp;
+	int		count;
+
+	count = count_arg(env);
+	swapped = 1;
+	while (swapped)
+	{
+		swapped = 0;
+		i = 0;
+		while (i < count - 1)
+		{
+			if (ft_strcmp(env[i], env[i + 1]) > 0)
+			{
+				temp = env[i];
+				env[i] = env[i + 1];
+				env[i + 1] = temp;
+				swapped = 1;
+			}
+			i++;
+		}
+	}
 }

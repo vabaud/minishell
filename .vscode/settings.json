@@ -27,6 +27,7 @@
         "readline.h": "c",
         "limits.h": "c",
         "libft.h": "c",
-        "locale": "c"
+        "locale": "c",
+        "stdlib.h": "c"
     }
 }

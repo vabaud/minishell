@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:26:17 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/18 13:35:58 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/18 13:45:01 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	main(int ac, char **av, char **envp)
 
 	token = NULL;
 	all = malloc(sizeof(t_all));
-    all->exit_code = 0;
 	(void)av;
 	if (ac != 1)
 		return (0);

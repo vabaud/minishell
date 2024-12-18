@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:14:08 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/18 13:40:02 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/18 17:38:58 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,10 @@ void	execute_pipeline(t_all *all)
 		cmd = cmd->next;
         i++;
 	}
-    wait_children(pid, i);
+    if (!is_builtin(all->cmd) || (is_builtin(all->cmd) && all->cmd->next))
+        wait_children(pid, i);
     init_signals();
+    free(pid);
 }
 
 void exec_cmd(t_command *cmd, t_all *all)
@@ -133,6 +135,6 @@ void exec_cmd(t_command *cmd, t_all *all)
     {
         path = get_path(cmd->args[0], all->env);
         execve(path, cmd->args, all->env);
+        free(path);
     }
-    free(path);
 }

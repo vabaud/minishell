@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 20:13:26 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/18 12:38:42 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/18 15:08:27 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_token	*tokenize_input(char *s)
 		else if (s[i])
 			i = handle_word(s, i, &token);
 	}
-	// display_tokens(token);
+	display_tokens(token);
 	return (token);
 }
 

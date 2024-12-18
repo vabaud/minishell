@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:26:17 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/18 13:45:01 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/18 16:54:54 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,15 @@ int	main(int ac, char **av, char **envp)
         if (str[0] != '\0')
         {
             add_history(str);
-            if (!syntax_error_checker(str))
-                return (0);
-            token = tokenize_input(str);
-            all->cmd = parse_token(token, all);
-            execute_pipeline(all);
+            if (syntax_error_checker(str))
+            {
+                token = tokenize_input(str);
+                if (syntax_token(token))
+                {
+                    all->cmd = parse_token(token, all);
+                    execute_pipeline(all);
+                }
+            }
         }
 	}
 	return (0);

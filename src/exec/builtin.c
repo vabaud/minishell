@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:16:38 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/17 20:12:00 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/18 12:28:54 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int execute_builtins(t_all *all, t_command *cmd)
     else if (ft_strcmp(cmd->args[0], "cd") == 0)
     {
         ft_cd(all, cmd);
-        // print_env(all->env);
         return (1);
     }
     else if (ft_strcmp(cmd->args[0], "pwd") == 0)

@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 20:13:26 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/12 17:02:00 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/18 12:38:42 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,7 @@ const char	*get_token_type_name(t_token_type type)
 	token_type_names[3] = "REDIRECT_OUT";
 	token_type_names[4] = "REDIRECT_APPEND";
 	token_type_names[5] = "REDIRECT_HEREDOC";
-	token_type_names[6] = "TOKEN_ENV_VAR";
-	if (type >= 0 && type < 7)
+	if (type >= 0 && type < 6)
 		return (token_type_names[type]);
 	return ("UNKNOWN");
 }

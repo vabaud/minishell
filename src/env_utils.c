@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 14:32:42 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/17 17:33:09 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/18 12:30:09 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*replace_env(char *s, t_all *all)
 				i++;
 			env = env_value(ft_substr(s, start, i - start), all->env);
             if (env[0] == '\0' && s[i++] == '?')
-                env = ft_itoa(all->exit_code);
+                env = ft_itoa(g_exit_code);
 			str = ft_strjoin_and_free(str, env);
 		}
 		else if (s[i] != '\0')

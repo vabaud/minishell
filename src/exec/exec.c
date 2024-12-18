@@ -6,13 +6,13 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:14:08 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/17 19:09:03 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/18 13:40:02 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	wait_children(pid_t *pids, int i, t_all *all)
+void	wait_children(pid_t *pids, int i)
 {
 	int	j;
 	int	status;
@@ -23,9 +23,9 @@ void	wait_children(pid_t *pids, int i, t_all *all)
 	{
 		waitpid(pids[j], &status, 0);
 		if (WIFEXITED(status))
-			all->exit_code = WEXITSTATUS(status);
+			g_exit_code = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
-			all->exit_code = 128 + WTERMSIG(status);
+			g_exit_code = 128 + WTERMSIG(status);
 		j++;
 	}
 }
@@ -71,12 +71,12 @@ void	execute_pipeline(t_all *all)
 
 	prev_pipe_fd = -1;
 	cmd = all->cmd;
-    signal(SIGINT, SIG_IGN);
     pid = malloc(sizeof(pid_t) * ft_cmdsize(all->cmd));
 	while (cmd)
 	{
         if (isatty(0))
             signal(SIGQUIT, handle_sigquit);
+        signal(SIGINT, handle_sigint_cmd);
 		if (cmd->next)
 			pipe(pipe_fd);
         if (is_builtin(cmd) && !cmd->prev && !cmd->next)
@@ -86,7 +86,6 @@ void	execute_pipeline(t_all *all)
             pid[i] = fork();
             if (pid[i] == 0)
             {
-                signal(SIGINT, handle_sigint);
                 if (cmd->input_file)
                     redirect_input(cmd->input_file);
                 else if (cmd->prev)
@@ -117,9 +116,8 @@ void	execute_pipeline(t_all *all)
 		cmd = cmd->next;
         i++;
 	}
-    wait_children(pid, i, all);
-    restore_sigint();
-    signal(SIGQUIT, SIG_IGN);
+    wait_children(pid, i);
+    init_signals();
 }
 
 void exec_cmd(t_command *cmd, t_all *all)

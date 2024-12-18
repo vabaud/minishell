@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:37:24 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/17 20:11:42 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/18 12:35:20 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ typedef enum e_token_type
 	TOKEN_REDIR_OUT,     // For '>'
 	TOKEN_REDIR_APPEND,  // For '>>'
 	TOKEN_REDIR_HEREDOC, // For '<<'
-	TOKEN_ENV_VAR,       // For environment variables
 }						t_token_type;
 
 typedef struct s_token
@@ -60,7 +59,7 @@ typedef struct s_all
 	int					exit_code;
 }						t_all;
 
-extern int				g_received_signal;
+extern int				g_exit_code;
 
 int						main(int ac, char **av, char **envp);
 int						pwd(void);
@@ -101,24 +100,25 @@ void					sigaction_handle(void);
 void					init_signals(void);
 void					handle_sigquit(int signal);
 void					handle_sigint(int signal);
+void					handle_sigint_cmd(int signal);
 char					**change_env_value(char *env, char **env_tab,
 							char *value);
 void					ft_cd(t_all *all, t_command *cmd);
 int						val_numb(const char *str);
-int					ft_exit(char **args);
+int						ft_exit(char **args);
 int						count_arg(char **params);
-int					ft_echo(t_command *cmd);
+int						ft_echo(t_command *cmd);
 void					free_env(char **env);
 void					remove_env(t_all *all, char *s);
 void					execute_pipeline(t_all *all);
 void					exec_cmd(t_command *cmd, t_all *all);
 char					*get_path(char *cmd, char **env);
-int					ft_unset(t_all *all, char **args);
+int						ft_unset(t_all *all, char **args);
 int						valid_indentifier(const char *str);
-int					add_n_up_env(t_all *all, const char *var);
+int						add_n_up_env(t_all *all, const char *var);
 int						browse_env(char **env, const char *var, char *name,
 							int name_len);
-int					ft_export(t_all *all, char **args);
+int						ft_export(t_all *all, char **args);
 int						ft_pwd(void);
 void					print_env(char **env);
 int						ft_cmdsize(t_command *lst);
@@ -126,8 +126,6 @@ void					handle_sigquit(int signal);
 void					heredoc_handler(int signum);
 int						execute_builtins(t_all *all, t_command *cmd);
 int						ft_env(char **env, t_command *cmd);
-void					setup_interactive_signals(void);
-void					setup_child_process_signals(void);
 int						is_builtin(t_command *cmd);
 
 #endif

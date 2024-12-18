@@ -6,13 +6,13 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:26:17 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/17 15:41:05 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/18 13:35:58 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int		g_received_signal = 0;
+int		g_exit_code = 0;
 
 void	print_env(char **env)
 {
@@ -42,21 +42,21 @@ int	main(int ac, char **av, char **envp)
 	all->env = env_cpy(envp);
 	while (1)
 	{
-        setup_interactive_signals();
 		str = readline("!!! shell> ");
-        if (!str || str[0] == '\0')
+        if (!str)
         {
             write(1, "exit\n", 5);
             break;
         }
-		add_history(str);
-		if (!syntax_error_checker(str))
-			return (0);
-		token = tokenize_input(str);
-		all->cmd = parse_token(token, all);
-        execute_pipeline(all);
+        if (str[0] != '\0')
+        {
+            add_history(str);
+            if (!syntax_error_checker(str))
+                return (0);
+            token = tokenize_input(str);
+            all->cmd = parse_token(token, all);
+            execute_pipeline(all);
+        }
 	}
 	return (0);
 }
-
-// test koo sadasd "[wa>""m''esm" < jesj | jesh >> hu

@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:37:24 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/18 15:06:00 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/18 19:25:13 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 # include "libft/libft.h"
 # include <fcntl.h>
 # include <limits.h>
-# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -127,7 +127,7 @@ int						execute_builtins(t_all *all, t_command *cmd);
 int						ft_env(char **env, t_command *cmd);
 int						is_builtin(t_command *cmd);
 int						syntax_token(t_token *token);
-void	sort_tab(char **env);
-void print_var(char *env, char **env_tab);
+void					sort_tab(char **env);
+void					print_var(char *env, char **env_tab);
 
 #endif

@@ -11,9 +11,9 @@ void print_var(char *env, char **env_tab)
     value = NULL;
 
     while(env[++i] != '=')
-        ft_strcharadd(new_env, env[i]);
-        value = env_value(new_env, env_tab);
-    ft_printf("declarer -x %s=\"%s\"\n", new_env, value);
+        new_env = ft_strcharadd(new_env, env[i]);
+    value = env_value(new_env, env_tab);
+    ft_printf("declare -x %s=\"%s\"\n", new_env, value);
     free(new_env);
     free(value);
 }

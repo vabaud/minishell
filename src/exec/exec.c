@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:14:08 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/18 17:38:58 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/18 20:16:00 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,12 @@ void exec_cmd(t_command *cmd, t_all *all)
     else
     {
         path = get_path(cmd->args[0], all->env);
+        if (!path)
+        {
+            ft_putstr_fd("command not found\n", STDERR_FILENO);
+            g_exit_code = 127;
+            return;
+        }
         execve(path, cmd->args, all->env);
         free(path);
     }

@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 17:45:04 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/17 20:08:21 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/18 20:46:31 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	handle_heredoc(t_command *cmd, t_token *token, t_all *all)
 
 	change = 0;
 	fd = open("/tmp/heredoc.tmp", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+    if (cmd->input_file)
+        free(cmd->input_file);
     cmd->input_file = ft_strdup("/tmp/heredoc.tmp");
 	delimiter = remove_quotes(token->next->value);
 	if (ft_strcmp(delimiter, token->next->value))
@@ -39,7 +41,10 @@ void	handle_heredoc(t_command *cmd, t_token *token, t_all *all)
         if (!ft_strcmp(delimiter, line))
             break;
         if (change == 1)
+        {
+            free(line);
             line = replace_env(line, all);
+        }
         ft_putstr_fd(line, fd);
         ft_putstr_fd("\n", fd);
         free(line);

@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:14:08 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/18 20:16:00 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/19 13:53:37 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,7 @@ void	execute_pipeline(t_all *all)
                     close(pipe_fd[0]);
                     close(pipe_fd[1]);
                 }
-                exec_cmd(cmd, all);
-                exit(0);
+                exec_cmd(cmd, all, pid);
             }
             else
             {
@@ -122,14 +121,17 @@ void	execute_pipeline(t_all *all)
     free(pid);
 }
 
-void exec_cmd(t_command *cmd, t_all *all)
+void exec_cmd(t_command *cmd, t_all *all, pid_t *pid)
 {
     char *path;
 
     if (is_builtin(cmd))
     {
-        if (!execute_builtins(all, cmd))
-            return;
+        execute_builtins(all, cmd);
+        free_cmd(all->cmd);
+        free_env(all->env);
+        free(all);
+        free(pid);
     }
     else
     {
@@ -138,9 +140,12 @@ void exec_cmd(t_command *cmd, t_all *all)
         {
             ft_putstr_fd("command not found\n", STDERR_FILENO);
             g_exit_code = 127;
-            return;
         }
-        execve(path, cmd->args, all->env);
-        free(path);
+        else
+        {
+            execve(path, cmd->args, all->env);
+            free(path);
+        }
     }
+    exit(g_exit_code);
 }

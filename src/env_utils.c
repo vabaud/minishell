@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 14:32:42 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/18 19:17:11 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/19 11:41:44 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	*env_value(char *s, char **env_tab)
 	while (env_tab[i])
 	{
 		j = 0;
-		while (env_tab[i][j] != '=')
+		while (env_tab[i][j] && env_tab[i][j] != '=')
 			j++;
 		if (!ft_strncmp(env_tab[i], s, j))
 		{
@@ -86,8 +86,7 @@ char	*env_value(char *s, char **env_tab)
 	}
 	if (env == NULL)
 		env = "\0";
-	// if (s)
-		// free(s);
+    free(s);
 	return (env);
 }
 

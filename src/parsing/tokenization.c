@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 20:13:26 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/18 15:08:27 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/19 12:00:39 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_token	*tokenize_input(char *s)
 		else if (s[i])
 			i = handle_word(s, i, &token);
 	}
-	display_tokens(token);
+	// display_tokens(token);
 	return (token);
 }
 
@@ -62,6 +62,7 @@ int	handle_special_chars(char *s, int i, t_token **token)
 int	handle_word(char *s, int i, t_token **token)
 {
 	int	start;
+    char *word;
 
 	start = i;
 	while (s[i])
@@ -70,7 +71,9 @@ int	handle_word(char *s, int i, t_token **token)
 			break ;
 		i++;
 	}
-	add_token(token, new_token(TOKEN_WORD, ft_substr(s, start, i - start)));
+    word = ft_substr(s, start, i - start);
+	add_token(token, new_token(TOKEN_WORD, word));
+    free(word);
 	return (i);
 }
 

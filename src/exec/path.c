@@ -12,7 +12,7 @@ char	*get_path(char *cmd, char **env)
     {
         return (ft_strdup(cmd));
     }
-	full_path = env_value("PATH", env);
+	full_path = env_value(ft_strdup("PATH"), env);
 	if (!full_path)
 		return (NULL);
 	path_tab = ft_split(full_path, ':');

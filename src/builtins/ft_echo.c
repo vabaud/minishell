@@ -6,36 +6,49 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:25:24 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/17 20:10:40 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/19 10:17:41 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-int	ft_echo(t_command *cmd)
-
+int	only_n(char *s)
 {
-	int i;
-	int newline;
+	int	i;
 
-	i = 1;       // debuter apres echo
-	newline = 0; // saut de ligne active par defaut
-
-	if (ft_strcmp(cmd->args[1], "-n") == 0)
+	i = 1;
+	while (s[i])
 	{
-		newline = 1;
+		if (s[i] != 'n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	ft_echo(t_command *cmd)
+{
+	int	i;
+	int	newline;
+
+	newline = 1;
+	i = 1;
+	while (i < (count_arg(cmd->args)) && cmd->args[i][0] == '-')
+	{
+		if (!only_n(cmd->args[i]))
+			break ;
+		if (i == 1)
+			newline = 0;
 		i++;
 	}
 	while (cmd->args[i])
 	{
-        while (i > 2 && i < (count_arg(cmd->args) - 1) && !ft_strncmp(cmd->args[i], "-n", 2))
-            i++;
 		ft_printf("%s", cmd->args[i]);
 		if (cmd->args[i + 1])
 			ft_printf(" ");
 		i++;
 	}
-	if (!newline)
+	if (newline)
 		ft_printf("\n");
-    return 1;
+	return (1);
 }

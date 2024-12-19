@@ -4,12 +4,12 @@ int valid_indentifier(const char *str)
 {
     int i;
 
-    if(!str || !ft_isalpha(str[0]) || str[0] != '_')
+    if(!str || (!ft_isalpha(str[0]) && str[0] != '_'))
         return(0);
     i = 1;
     while(str[i] && str[i] != '=')
     {
-        if(!ft_isalnum(str[i]) || str[i] != '_')
+        if(!ft_isalnum(str[i]) && str[i] != '_')
             return(0);
         i++;
     }
@@ -24,7 +24,7 @@ int browse_env(char **env, const char *var, char *name, int name_len)
     i = 0;
     while(env[i])
     {
-        if(ft_strncmp(env[i], name, name_len) == 0 && env[i][name_len] == '=')
+        if(ft_strncmp(env[i], name, name_len) == 0 && var[name_len] == '=')
         {
             free(env[i]);
             env[i] = ft_strdup(var);
@@ -45,21 +45,21 @@ int add_n_up_env(t_all *all, const char *var)
 
     i = 0;
     name_len = 0;
-    while(var[name_len] && var[name_len] != '=')
-        name_len++;
+    new_env = NULL;
+    while(var[++name_len] && var[name_len] != '=')
+        name_len++;;
     name = ft_substr(var, 0, name_len);
     if (browse_env(all->env, var, name, name_len))
         return 0;
-    new_env = malloc(sizeof(char *) * (i + 2));
-    i = 0;
+    new_env = malloc(sizeof(char *) * (count_arg(all->env) + 2));
     while(all->env[i])
     {
-        new_env[i] = all->env[i];
+        new_env[i] = ft_strdup(all->env[i]);
         i++;
     }
     new_env[i] = ft_strdup(var);
     new_env[i + 1] = NULL;
-    free(all->env);
+    free_env(all->env);
     all->env = new_env;
     free(name);
     return 1;
@@ -72,19 +72,16 @@ int ft_export(t_all *all, char **args)
 
     new_env = all->env;
 
-    if(!args || args[0])
+    if(count_arg(args) == 1)
     {
-        i = 0;
+        i = -1;
         sort_tab(new_env);
-        while(new_env[i])
-        {
+        while(new_env[++i])
             print_var(new_env[i], new_env);
-            i++;
-        }
         return 0;;
     }
-    i = -1;
-    while(args[++i])
+    i = 0;
+    while(++i < count_arg(args))
     {
         if(valid_indentifier(args[i]))
             add_n_up_env(all, args[i]);

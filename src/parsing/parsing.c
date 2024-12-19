@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:00:58 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/18 13:20:33 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/19 14:00:51 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ t_command	*parse_token(t_token *token, t_all *all)
 {
 	t_command	*cmd;
 	t_command	*current;
+    t_token *tmp;
 
 	cmd = NULL;
+    tmp = token;
 	current = new_command();
 	while (token)
 	{
@@ -38,6 +40,7 @@ t_command	*parse_token(t_token *token, t_all *all)
 		token = token->next;
 	}
 	add_command(&cmd, current);
+    free_token(tmp);
 	// print_cmd(cmd);
 	return (cmd);
 }
@@ -78,6 +81,7 @@ void	add_arg(t_command *cmd, char *new_str)
 	while (i >= 0)
 	{
 		new_arg[i] = ft_strdup(cmd->args[i]);
+        free(cmd->args[i]);
 		i--;
 	}
 	if (cmd->args)

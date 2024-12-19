@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 17:51:16 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/17 18:09:52 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/18 20:51:59 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,24 +35,25 @@ int	ft_exit(char **args)
 
 	ft_putstr_fd("exit\n", STDOUT_FILENO);
 
-	if(args[1])
+	if (args[1])
 	{
-		if(val_numb(args[1]))
+		if (val_numb(args[1]))
 		{
 			i = atoi(args[1]);
-			if(args[2])
+			if (args[2])
 			{
 				ft_putstr_fd("exit, trop d'arguemnts\n", STDOUT_FILENO);
-				return 0;
+				return (0);
 			}
 			exit(i);
 		}
 		else
 		{
-			ft_putstr_fd("exit: requiert un argument numerique\n", STDOUT_FILENO);
+			ft_putstr_fd("exit: requiert un argument numerique\n",
+				STDOUT_FILENO);
 			exit(255);
 		}
 	}
 	exit(0);
-    return 1;
+	return (1);
 }

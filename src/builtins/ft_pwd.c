@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 18:31:22 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/17 14:35:08 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/19 12:36:25 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	ft_pwd(void)
 
 	if (getcwd(path, PATH_MAX))
 	{
-		ft_printf("%s\n", path);
+		ft_putstr_fd(path, STDOUT_FILENO);
+        ft_putstr_fd("\n", STDOUT_FILENO);
 		return (1);
 	}
 	return (0);

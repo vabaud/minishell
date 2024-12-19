@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:00:58 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/19 14:00:51 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/19 17:37:42 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,11 @@ void	add_arg(t_command *cmd, char *new_str)
 	while (i >= 0)
 	{
 		new_arg[i] = ft_strdup(cmd->args[i]);
-        free(cmd->args[i]);
 		i--;
 	}
 	if (cmd->args)
 	{
-		free(cmd->args);
+        free_env(cmd->args);
 	}
 	cmd->args = new_arg;
 }

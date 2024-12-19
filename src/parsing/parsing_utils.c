@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:02:04 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/18 21:04:14 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/19 17:09:26 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,10 @@ void	free_cmd(t_command *cmd)
 		tmp = cmd;
 		cmd = cmd->next;
 		while (tmp->args && tmp->args[i])
-			free(tmp->args[i++]);
+        {
+			free(tmp->args[i]);
+            i++;
+        }
 		if (tmp->args)
 			free(tmp->args);
         if (tmp->input_file)

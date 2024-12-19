@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 21:07:55 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/03 23:44:17 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/19 18:43:27 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 }					t_list;
+
 
 long				ft_atoi(const char *str);
 void				ft_bzero(void *s, size_t n);

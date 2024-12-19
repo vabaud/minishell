@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:37:24 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/19 17:49:11 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/19 19:08:13 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ char					**change_env_value(char *env, char **env_tab,
 							char *value);
 void					ft_cd(t_all *all, t_command *cmd);
 int						val_numb(const char *str);
-int						ft_exit(char **args);
+void						ft_exit(char **args, t_all *all, pid_t *pid);
 int						count_arg(char **params);
 int						ft_echo(t_command *cmd);
 void					free_env(char **env);
@@ -123,7 +123,7 @@ void					print_env(char **env);
 int						ft_cmdsize(t_command *lst);
 void					handle_sigquit(int signal);
 void					heredoc_handler(int signum);
-int						execute_builtins(t_all *all, t_command *cmd);
+int						execute_builtins(t_all *all, t_command *cmd, pid_t *pid);
 int						ft_env(char **env, t_command *cmd);
 int						is_builtin(t_command *cmd);
 int						syntax_token(t_token *token);

@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:16:38 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/18 20:52:33 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/19 19:07:49 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int is_builtin(t_command *cmd)
     return (0);
 }
 
-int execute_builtins(t_all *all, t_command *cmd)
+int execute_builtins(t_all *all, t_command *cmd, pid_t *pid)
 {
     if (!cmd->args[0])
         return (0);
@@ -52,7 +52,7 @@ int execute_builtins(t_all *all, t_command *cmd)
     else if (ft_strcmp(cmd->args[0], "env") == 0)
         return (ft_env(all->env, cmd), 1);
     else if (ft_strcmp(cmd->args[0], "exit") == 0)
-        return (ft_exit(cmd->args), 1);
+        return (ft_exit(cmd->args, all, pid), 1);
 
     return (0);
 }

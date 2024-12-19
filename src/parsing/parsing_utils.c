@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:02:04 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/19 17:09:26 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/19 18:55:23 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	free_cmd(t_command *cmd)
 	{
 		tmp = cmd;
 		cmd = cmd->next;
+        i = 0;
 		while (tmp->args && tmp->args[i])
         {
 			free(tmp->args[i]);

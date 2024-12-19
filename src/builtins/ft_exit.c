@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 17:51:16 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/18 20:51:59 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/19 19:08:44 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	val_numb(const char *str)
 	return (1);
 }
 
-int	ft_exit(char **args)
+void	ft_exit(char **args, t_all *all, pid_t *pid)
 {
 	int i = 0;
 
@@ -43,17 +43,19 @@ int	ft_exit(char **args)
 			if (args[2])
 			{
 				ft_putstr_fd("exit, trop d'arguemnts\n", STDOUT_FILENO);
-				return (0);
+				return ;
 			}
-			exit(i);
 		}
 		else
 		{
 			ft_putstr_fd("exit: requiert un argument numerique\n",
 				STDOUT_FILENO);
-			exit(255);
+			i = 255;
 		}
 	}
-	exit(0);
-	return (1);
+    free_cmd(all->cmd);
+    free_env(all->env);
+    free(all);
+    free(pid);
+	exit(i);
 }

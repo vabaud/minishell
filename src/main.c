@@ -6,11 +6,12 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:26:17 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/19 17:49:07 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/19 18:59:50 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
 
 int		g_exit_code = 0;
 
@@ -59,8 +60,8 @@ int	main(int ac, char **av, char **envp)
                     execute_pipeline(all);
                 }
             }
+            free_cmd(all->cmd);
         }
-        free_cmd(all->cmd);
 	}
     free_env(all->env);
     free(all);

@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 14:54:25 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/17 19:23:34 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/19 18:42:30 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,7 @@ int	set_redirection(t_command *cmd, t_token *token, t_all *all)
 int	set_input(t_command *cmd, char *file, t_all *all)
 {
 	if (cmd->input_file)
-	{
 		free(cmd->input_file);
-	}
 	cmd->input_file = replace_env(remove_quotes(file), all);
 	return (1);
 }

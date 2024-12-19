@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:14:08 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/19 17:40:59 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/19 19:09:26 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	execute_pipeline(t_all *all)
 		if (cmd->next)
 			pipe(pipe_fd);
         if (is_builtin(cmd) && !cmd->prev && !cmd->next)
-            execute_builtins(all, cmd);
+            execute_builtins(all, cmd, pid);
         else
         {
             pid[i] = fork();
@@ -127,7 +127,7 @@ void exec_cmd(t_command *cmd, t_all *all, pid_t *pid)
 
     if (is_builtin(cmd))
     {
-        execute_builtins(all, cmd);
+        execute_builtins(all, cmd, pid);
         free_cmd(all->cmd);
         free_env(all->env);
         free(all);
@@ -136,17 +136,18 @@ void exec_cmd(t_command *cmd, t_all *all, pid_t *pid)
     else
     {
         path = get_path(cmd->args[0], all->env);
-        if (path)
+        if (!path)
         {
-            execve(path, cmd->args, all->env);
-            free(path);
+            ft_putstr_fd("command not found\n", STDERR_FILENO);
+            free_cmd(all->cmd);
+            free_env(all->env);
+            free(all);
+            free(pid);
+            g_exit_code = 127;
         }
-        ft_putstr_fd("command not found\n", STDERR_FILENO);
-        free_cmd(all->cmd);
-        free_env(all->env);
-        free(all);
-        free(pid);
-        g_exit_code = 127;
+        else
+            execve(path, cmd->args, all->env);
+        free(path);
     }
     exit(g_exit_code);
 }

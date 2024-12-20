@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 17:51:16 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/19 19:08:44 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/20 11:25:44 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,18 @@ int	val_numb(const char *str)
 
 void	ft_exit(char **args, t_all *all, pid_t *pid)
 {
-	int i = 0;
+	int	i;
 
+	i = 0;
 	ft_putstr_fd("exit\n", STDOUT_FILENO);
-
 	if (args[1])
 	{
 		if (val_numb(args[1]))
 		{
 			i = atoi(args[1]);
 			if (args[2])
-			{
-				ft_putstr_fd("exit, trop d'arguemnts\n", STDOUT_FILENO);
-				return ;
-			}
+				return (ft_putstr_fd("exit, trop d'arguemnts\n",
+						STDOUT_FILENO));
 		}
 		else
 		{
@@ -53,9 +51,9 @@ void	ft_exit(char **args, t_all *all, pid_t *pid)
 			i = 255;
 		}
 	}
-    free_cmd(all->cmd);
-    free_env(all->env);
-    free(all);
-    free(pid);
+	free_cmd(all->cmd);
+	free_env(all->env);
+	free(all);
+	free(pid);
 	exit(i);
 }

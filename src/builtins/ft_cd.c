@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:28:42 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/19 18:41:15 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/20 11:14:55 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int	count_arg(char **params)
 
 void	ft_cd(t_all *all, t_command *cmd)
 {
-	char    *path;
-    char    oldpwd[PATH_MAX];
-    char    pwd[PATH_MAX];
+	char	*path;
+	char	oldpwd[PATH_MAX];
+	char	pwd[PATH_MAX];
 
 	path = NULL;
 	getcwd(oldpwd, PATH_MAX);
@@ -38,7 +38,7 @@ void	ft_cd(t_all *all, t_command *cmd)
 		path = ft_strdup(cmd->args[1]);
 	if (chdir(path) == -1)
 		return ;
-    free(path);
+	free(path);
 	all->env = change_env_value("OLDPWD", all->env, oldpwd);
 	getcwd(pwd, PATH_MAX);
 	all->env = change_env_value("PWD", all->env, pwd);

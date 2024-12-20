@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/20 11:16:11 by vabaud            #+#    #+#             */
+/*   Updated: 2024/12/20 11:16:23 by vabaud           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 void	remove_env(t_all *all, char *s)
@@ -24,7 +36,7 @@ void	remove_env(t_all *all, char *s)
 		i++;
 	}
 	new_env[k] = NULL;
-    free_env(all->env);
+	free_env(all->env);
 	all->env = new_env;
 }
 
@@ -35,13 +47,13 @@ int	ft_unset(t_all *all, char **args)
 	if (!args || !args[0])
 	{
 		ft_putstr_fd("unset: pas assez d'arguments\n", STDOUT_FILENO);
-		return 0;
+		return (0);
 	}
 	i = 1;
 	while (args[i])
 	{
-		remove_env(all, args[i]); // appeler rm_env pour chaque args
+		remove_env(all, args[i]);
 		i++;
 	}
-    return 1;
+	return (1);
 }

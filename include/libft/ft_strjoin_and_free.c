@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 14:38:01 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/19 18:44:26 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/20 11:28:45 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,18 @@ char	*ft_strjoin_and_free(char *s1, char *s2)
 	if (!nstr)
 		return (NULL);
 	while (s1 && s1[i] != '\0')
-    {
+	{
 		nstr[i] = s1[i];
-        i++;
-    }
+		i++;
+	}
 	while (s2[j] != '\0')
 		nstr[i++] = s2[j++];
 	nstr[i] = '\0';
-    if (s1)
-        free(s1);
-    if (s2[0] != '\0')
-    {
-        free(s2);
-    }
+	if (s1)
+		free(s1);
+	if (s2[0] != '\0')
+	{
+		free(s2);
+	}
 	return (nstr);
 }

@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:37:24 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/20 17:48:20 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/20 17:58:15 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void					print_env(char **env);
 // BUILTINS
 void					ft_cd(t_all *all, t_command *cmd);
 int						val_numb(const char *str);
-void					ft_exit(char **args, t_all *all, pid_t *pid);
+void					ft_exit(char **args, t_all *all, t_pipe_info *pipe_info, t_command *cmd);
 int						ft_echo(t_command *cmd);
 int						ft_unset(t_all *all, char **args);
 void					remove_env(t_all *all, char *s);
@@ -144,7 +144,6 @@ char					**env_cpy(char **env);
 
 // EXEC
 void					execute_pipeline(t_all *all);
-// void					exec_cmd(t_command *cmd, t_all *all, pid_t *pid);
 void					exec_cmd(t_command *cmd, t_all *all,
 							t_pipe_info *pipe_info);
 char					*get_path(char *cmd, char **env);
@@ -152,9 +151,7 @@ void					free_all_exec(t_all *all, t_pipe_info *pipe_info);
 void					pipe_loop(t_command *cmd, t_all *all,
 							t_pipe_info *pipe_info);
 void					parent_process(t_pipe_info *pipe_info, t_command *cmd);
-// void					redirect_output(const char *file, int append);
 void					redirect_output(t_command *cmd, t_pipe_info *pipe_info);
-// void					redirect_input(const char *);
 void					redirect_input(t_command *cmd, t_pipe_info *pipe_info, t_all *all);
 void					wait_children(t_pipe_info *pipe_info);
 

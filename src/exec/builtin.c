@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:16:38 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/20 15:30:50 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/20 17:58:23 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,6 @@ int	execute_builtins(t_all *all, t_command *cmd, t_pipe_info *pipe_info)
 	else if (ft_strcmp(cmd->args[0], "env") == 0)
 		return (ft_env(all->env, cmd), 1);
 	else if (ft_strcmp(cmd->args[0], "exit") == 0)
-		return (ft_exit(cmd->args, all, pipe_info->pid), 1);
+		return (ft_exit(cmd->args, all, pipe_info, cmd), 1);
 	return (0);
 }

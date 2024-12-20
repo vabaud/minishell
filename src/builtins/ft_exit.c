@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 17:51:16 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/20 11:25:44 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/20 17:58:09 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,15 @@ int	val_numb(const char *str)
 	return (1);
 }
 
-void	ft_exit(char **args, t_all *all, pid_t *pid)
+void	ft_exit(char **args, t_all *all, t_pipe_info *pipe_info, t_command *cmd)
 {
 	int	i;
 
 	i = 0;
-	ft_putstr_fd("exit\n", STDOUT_FILENO);
+    if (!cmd->prev)
+    {    
+        ft_putstr_fd("exit\n", STDOUT_FILENO);
+    }
 	if (args[1])
 	{
 		if (val_numb(args[1]))
@@ -51,9 +54,6 @@ void	ft_exit(char **args, t_all *all, pid_t *pid)
 			i = 255;
 		}
 	}
-	free_cmd(all->cmd);
-	free_env(all->env);
-	free(all);
-	free(pid);
+	free_all_exec(all, pipe_info);
 	exit(i);
 }

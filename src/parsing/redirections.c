@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 14:54:25 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/20 10:54:08 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/20 17:41:52 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	set_redirection(t_command *cmd, t_token *token, t_all *all)
 		|| token->type == TOKEN_REDIR_APPEND)
 	{
 		if (!set_out_or_append(cmd, token->next->value, token->type, all))
-			return (0);
+			return (0); 
 	}
 	return (1);
 }
@@ -36,7 +36,7 @@ int	set_input(t_command *cmd, char *file, t_all *all)
 {
 	if (cmd->input_file)
 		free(cmd->input_file);
-	cmd->input_file = replace_env(remove_quotes(file), all);
+	cmd->input_file = replace_env(remove_quotes(ft_strdup(file)), all);
 	return (1);
 }
 
@@ -51,7 +51,7 @@ int	set_out_or_append(t_command *cmd, char *file, t_token_type type, t_all *all)
 		cmd->append_mode = 0;
 	else if (type == TOKEN_REDIR_APPEND)
 		cmd->append_mode = 1;
-	cmd->output_file = replace_env(remove_quotes(file), all);
+	cmd->output_file = remove_quotes(replace_env(ft_strdup(file), all));
 	close(fd);
 	if (!cmd->output_file)
 		return (0);

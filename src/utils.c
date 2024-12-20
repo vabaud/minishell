@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:10:32 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/20 10:52:59 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/20 17:34:14 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ char	*remove_quotes(char *s)
 			i++;
 		}
 		if (s[i])
-			new_str = ft_strcharadd(new_str, s[i++]);
+        {
+			new_str = ft_strcharadd(new_str, s[i]);
+            i++;
+        }
 	}
 	free(s);
 	return (new_str);

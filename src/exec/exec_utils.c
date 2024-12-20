@@ -6,13 +6,13 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 11:56:15 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/20 16:04:57 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/20 17:47:43 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	redirect_input(t_command *cmd, t_pipe_info *pipe_info)
+void	redirect_input(t_command *cmd, t_pipe_info *pipe_info, t_all *all)
 {
 	int	fd;
 
@@ -22,6 +22,7 @@ void	redirect_input(t_command *cmd, t_pipe_info *pipe_info)
 		if (fd < 0)
 		{
 			perror("open input");
+            free_all_exec(all, pipe_info);
 			exit(EXIT_FAILURE);
 		}
 		dup2(fd, STDIN_FILENO);

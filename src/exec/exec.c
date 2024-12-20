@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:14:08 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/20 16:04:47 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/20 17:48:51 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	pipe_loop(t_command *cmd, t_all *all, t_pipe_info *pipe_info)
 			pipe_info->pid[pipe_info->i] = fork();
 			if (pipe_info->pid[pipe_info->i++] == 0)
 			{
-				redirect_input(cmd, pipe_info);
+				redirect_input(cmd, pipe_info, all);
 				exec_cmd(cmd, all, pipe_info);
 			}
 			else

@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:37:24 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/20 16:05:16 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/20 17:48:20 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ void					parent_process(t_pipe_info *pipe_info, t_command *cmd);
 // void					redirect_output(const char *file, int append);
 void					redirect_output(t_command *cmd, t_pipe_info *pipe_info);
 // void					redirect_input(const char *);
-void					redirect_input(t_command *cmd, t_pipe_info *pipe_info);
+void					redirect_input(t_command *cmd, t_pipe_info *pipe_info, t_all *all);
 void					wait_children(t_pipe_info *pipe_info);
 
 // SIGNAL

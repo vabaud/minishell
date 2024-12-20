@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 17:45:04 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/20 10:59:43 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/20 15:38:17 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	heredoc_loop(char *delimiter, int change, int fd, t_all *all)
 			free(line);
 			break ;
 		}
-		if (change == 1)
+		if (change == 0)
 			line = replace_env(line, all);
 		ft_putstr_fd(line, fd);
 		ft_putstr_fd("\n", fd);

@@ -6,20 +6,16 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:00:58 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/19 18:43:43 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/20 13:15:29 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-t_command	*parse_token(t_token *token, t_all *all)
+t_command	*browse_token(t_token *token, t_all *all, t_command *cmd)
 {
-	t_command	*cmd;
 	t_command	*current;
-    t_token *tmp;
 
-	cmd = NULL;
-    tmp = token;
 	current = new_command();
 	while (token)
 	{
@@ -40,8 +36,18 @@ t_command	*parse_token(t_token *token, t_all *all)
 		token = token->next;
 	}
 	add_command(&cmd, current);
-    free_token(tmp);
-	// print_cmd(cmd);
+	return (cmd);
+}
+
+t_command	*parse_token(t_token *token, t_all *all)
+{
+	t_command	*cmd;
+	t_token		*tmp;
+
+	cmd = NULL;
+	tmp = token;
+	cmd = browse_token(token, all, cmd);
+	free_token(tmp);
 	return (cmd);
 }
 
@@ -58,7 +64,7 @@ void	add_command(t_command **cmd, t_command *new_cmd)
 		while (last->next != NULL)
 			last = last->next;
 		last->next = new_cmd;
-        last->next->prev = last;
+		last->next->prev = last;
 	}
 }
 
@@ -85,7 +91,7 @@ void	add_arg(t_command *cmd, char *new_str)
 	}
 	if (cmd->args)
 	{
-        free_env(cmd->args);
+		free_env(cmd->args);
 	}
 	cmd->args = new_arg;
 }

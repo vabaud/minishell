@@ -27,6 +27,8 @@ SRC = src/main.c \
 		src/exec/path.c \
 		src/exec/builtin.c \
 		src/builtins/export_utils.c \
+		src/parsing/syntax_checker_utils.c \
+		src/exec/exec_utils.c \
 
 OBJ = ${SRC:.c=.o}
 

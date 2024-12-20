@@ -6,34 +6,11 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 14:32:42 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/19 18:43:23 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/20 10:52:46 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-int	in_s_quote(char *s, int i)
-{
-	int	j;
-	int	q_char;
-
-	j = 0;
-	q_char = 0;
-	while (j < i)
-	{
-		if (s[j] == '"' || s[j] == '\'')
-		{
-			if (q_char == s[j])
-				q_char = 0;
-			else if (q_char == 0)
-				q_char = s[j];
-		}
-		j++;
-	}
-	if (q_char == '\'')
-		return (1);
-	return (0);
-}
 
 char	*replace_env(char *s, t_all *all)
 {
@@ -54,8 +31,8 @@ char	*replace_env(char *s, t_all *all)
 			while (ft_isalnum(s[i]) || s[i] == '_')
 				i++;
 			env = env_value(ft_substr(s, start, i - start), all->env);
-            if (env[0] == '\0' && s[i++] == '?')
-                env = ft_itoa(g_exit_code);
+			if (env[0] == '\0' && s[i++] == '?')
+				env = ft_itoa(g_exit_code);
 			str = ft_strjoin_and_free(str, env);
 		}
 		else if (s[i] != '\0')
@@ -86,7 +63,7 @@ char	*env_value(char *s, char **env_tab)
 	}
 	if (env == NULL)
 		env = "\0";
-    free(s);
+	free(s);
 	return (env);
 }
 
@@ -95,7 +72,7 @@ char	**change_env_value(char *env, char **env_tab, char *value)
 	int		i;
 	int		j;
 	char	*tmp;
-    char **new_env;
+	char	**new_env;
 
 	i = 0;
 	j = 0;
@@ -114,37 +91,44 @@ char	**change_env_value(char *env, char **env_tab, char *value)
 		}
 		i++;
 	}
-    new_env = env_cpy(env_tab);
-    free_env(env_tab);
+	new_env = env_cpy(env_tab);
+	free_env(env_tab);
 	return (new_env);
 }
 
-void free_env(char **env)
+void	free_env(char **env)
 {
-    int i = 0;
+	int	i;
 
-    if (!env)
-        return;
-    while (env[i])
-    {
-        free(env[i]);
-        i++;
-    }
-    free(env);
+	i = 0;
+	if (!env)
+		return ;
+	while (env[i])
+	{
+		free(env[i]);
+		i++;
+	}
+	free(env);
 }
 
-void add_env(t_all *all, char *s)
+char	**env_cpy(char **env)
 {
-    int i = 0;
-    char **new_env;
-    new_env = malloc(sizeof(char *) * (count_arg(all->env) + 2));
-    while (all->env[i])
-    {
-        new_env[i] = ft_strdup(all->env[i]);
-        i++;
-    }
-    new_env[i] = ft_strdup(s);
-    new_env[i] = NULL;
-    free_env(all->env);
-    all->env = new_env;
+	char	**new_env;
+	int		i;
+
+	i = 0;
+	new_env = NULL;
+	while (env[i])
+		i++;
+	new_env = malloc(sizeof(char *) * (i + 1));
+	if (!new_env)
+		return (NULL);
+	i = 0;
+	while (env[i])
+	{
+		new_env[i] = ft_strdup(env[i]);
+		i++;
+	}
+	new_env[i] = NULL;
+	return (new_env);
 }

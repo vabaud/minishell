@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:10:32 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/19 18:43:36 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/20 10:52:59 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,24 +45,25 @@ char	*remove_quotes(char *s)
 	return (new_str);
 }
 
-char	**env_cpy(char **env)
+int	in_s_quote(char *s, int i)
 {
-	char	**new_env;
-	int		i;
+	int	j;
+	int	q_char;
 
-	i = 0;
-	new_env = NULL;
-	while (env[i])
-		i++;
-	new_env = malloc(sizeof(char *) * (i + 1));
-	if (!new_env)
-		return (NULL);
-	i = 0;
-	while (env[i])
+	j = 0;
+	q_char = 0;
+	while (j < i)
 	{
-		new_env[i] = ft_strdup(env[i]);
-		i++;
+		if (s[j] == '"' || s[j] == '\'')
+		{
+			if (q_char == s[j])
+				q_char = 0;
+			else if (q_char == 0)
+				q_char = s[j];
+		}
+		j++;
 	}
-    new_env[i] = NULL;
-	return (new_env);
+	if (q_char == '\'')
+		return (1);
+	return (0);
 }

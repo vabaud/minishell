@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   path.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/20 11:29:40 by vabaud            #+#    #+#             */
+/*   Updated: 2024/12/20 11:29:40 by vabaud           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 char	*get_path(char *cmd, char **env)
@@ -8,10 +20,10 @@ char	*get_path(char *cmd, char **env)
 	char	*cmd_path;
 
 	i = -1;
-    if (cmd[0] == '/' && access(cmd, X_OK) == 0)
-    {
-        return (ft_strdup(cmd));
-    }
+	if (cmd[0] == '/' && access(cmd, X_OK) == 0)
+	{
+		return (ft_strdup(cmd));
+	}
 	full_path = env_value(ft_strdup("PATH"), env);
 	if (!full_path)
 		return (NULL);

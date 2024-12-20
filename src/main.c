@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:26:17 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/20 10:51:18 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/20 12:15:55 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	shell_loop(t_all *all, t_token *token)
 				{
 					all->cmd = parse_token(token, all);
 					execute_pipeline(all);
-					free_cmd(all->cmd);
+                    free_cmd(all->cmd);
 				}
 			}
 		}

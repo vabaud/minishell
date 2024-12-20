@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:14:08 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/20 12:05:29 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/20 12:25:19 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	pipe_loop(t_command *cmd, t_all *all, pid_t *pid, int prev_pipe_fd)
 			else
 				parent_process(prev_pipe_fd, pipe_fd, cmd);
 		}
+        printf("%d\n", i);
 		cmd = cmd->next;
 	}
 }
@@ -70,7 +71,8 @@ void	execute_pipeline(t_all *all)
 	pid = malloc(sizeof(pid_t) * ft_cmdsize(all->cmd));
 	pipe_loop(cmd, all, pid, prev_pipe_fd);
 	if (!is_builtin(all->cmd) || (is_builtin(all->cmd) && all->cmd->next))
-		wait_children(pid, ft_cmdsize(all->cmd));
+		wait_children(pid, ft_cmdsize(all->cmd) - 1);
+    printf("%d\n", ft_cmdsize(all->cmd) - 1);
 	init_signals();
 	free(pid);
 }
@@ -83,7 +85,11 @@ void	exec_cmd(t_command *cmd, t_all *all, pid_t *pid, int *pipe_fd)
 	if (is_builtin(cmd))
 	{
 		execute_builtins(all, cmd, pid);
-		free_all_exec(all, pid);
+        free_cmd(all->cmd);
+        free_env(all->env);
+        free(all);
+        free(pid);
+		// free_all_exec(all, pid);
 	}
 	else
 	{

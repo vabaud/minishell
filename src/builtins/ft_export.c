@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 11:16:07 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/20 11:23:53 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/20 16:04:18 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	add_n_up_env(t_all *all, const char *var)
 	i = 0;
 	name_len = 0;
 	new_env = NULL;
-	while (var[++name_len] && var[name_len] != '=')
+	while (var[name_len] && var[name_len] != '=')
 		name_len++;
 	name = ft_substr(var, 0, name_len);
 	if (browse_env(all->env, var, name, name_len))

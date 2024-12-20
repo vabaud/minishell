@@ -6,13 +6,13 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 11:56:15 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/20 13:15:55 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/20 16:04:57 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	redirect_input(t_command *cmd, int prev_pipe_fd)
+void	redirect_input(t_command *cmd, t_pipe_info *pipe_info)
 {
 	int	fd;
 
@@ -29,12 +29,12 @@ void	redirect_input(t_command *cmd, int prev_pipe_fd)
 	}
 	else if (cmd->prev)
 	{
-		dup2(prev_pipe_fd, STDIN_FILENO);
-		close(prev_pipe_fd);
+		dup2(pipe_info->prev_pipe_fd, STDIN_FILENO);
+		close(pipe_info->prev_pipe_fd);
 	}
 }
 
-void	redirect_output(t_command *cmd, int *pipe_fd)
+void	redirect_output(t_command *cmd, t_pipe_info *pipe_info)
 {
 	int	fd;
 
@@ -54,26 +54,25 @@ void	redirect_output(t_command *cmd, int *pipe_fd)
 	}
 	else if (cmd->next)
 	{
-		dup2(pipe_fd[1], STDOUT_FILENO);
-		close(pipe_fd[0]);
-		close(pipe_fd[1]);
+		dup2(pipe_info->pipe_fd[1], STDOUT_FILENO);
+		close(pipe_info->pipe_fd[0]);
+		close(pipe_info->pipe_fd[1]);
 	}
 }
 
-int	parent_process(int prev_pipe_fd, int *pipe_fd, t_command *cmd)
+void	parent_process(t_pipe_info *pipe_info, t_command *cmd)
 {
-	if (prev_pipe_fd != -1)
-		close(prev_pipe_fd);
+	if (pipe_info->prev_pipe_fd != -1)
+		close(pipe_info->prev_pipe_fd);
 	if (cmd->next)
-		close(pipe_fd[1]);
-	prev_pipe_fd = pipe_fd[0];
-	return (prev_pipe_fd);
+		close(pipe_info->pipe_fd[1]);
+	pipe_info->prev_pipe_fd = pipe_info->pipe_fd[0];
 }
 
-void	free_all_exec(t_all *all, pid_t *pid)
+void	free_all_exec(t_all *all, t_pipe_info *pipe_info)
 {
 	free_cmd(all->cmd);
 	free_env(all->env);
 	free(all);
-	free(pid);
+	free(pipe_info->pid);
 }

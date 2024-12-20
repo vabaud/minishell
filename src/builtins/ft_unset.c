@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 11:16:11 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/20 11:16:23 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/20 15:51:25 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	remove_env(t_all *all, char *s)
 	while (all->env[i])
 	{
 		j = 0;
-		while (all->env[i][j] != '=')
+		while (all->env[i][j] && all->env[i][j] != '=')
 			j++;
 		if (ft_strncmp(all->env[i], s, j))
 			new_env[k++] = ft_strdup(all->env[i]);

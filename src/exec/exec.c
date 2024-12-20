@@ -6,11 +6,28 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:14:08 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/20 17:48:51 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/20 19:03:58 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+void execute_builtins_with_redirection(t_command *cmd, t_all *all, t_pipe_info *pipe_info)
+{
+    int saved_stdout;
+
+    if (cmd->output_file || cmd->next)
+    {
+        saved_stdout = dup(STDOUT_FILENO);
+        redirect_output(cmd, pipe_info);
+    }
+    execute_builtins(all, cmd, pipe_info);
+    if (cmd->output_file || cmd->next)
+    {
+        dup2(saved_stdout, STDOUT_FILENO);
+        close(saved_stdout);
+    }
+}
 
 void	wait_children(t_pipe_info *pipe_info)
 {
@@ -39,7 +56,9 @@ void	pipe_loop(t_command *cmd, t_all *all, t_pipe_info *pipe_info)
 		if (cmd->next)
 			pipe(pipe_info->pipe_fd);
 		if (is_builtin(cmd) && !cmd->prev && !cmd->next)
-			execute_builtins(all, cmd, pipe_info);
+        {
+			execute_builtins_with_redirection(cmd, all, pipe_info);
+        }
 		else
 		{
 			pipe_info->pid[pipe_info->i] = fork();
@@ -78,7 +97,7 @@ void	exec_cmd(t_command *cmd, t_all *all, t_pipe_info *pipe_info)
 	redirect_output(cmd, pipe_info);
 	if (is_builtin(cmd))
 	{
-		execute_builtins(all, cmd, pipe_info);
+        execute_builtins_with_redirection(cmd, all, pipe_info);
 		free_all_exec(all, pipe_info);
 	}
 	else

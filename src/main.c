@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:26:17 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/20 15:41:28 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/20 18:09:42 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	shell_loop(t_all *all, t_token *token)
 			write(1, "exit\n", 5);
 			break ;
 		}
-		if (str[0] != '\0')
+		if (str[0] != '\0' && not_only_space(str))
 		{
 			add_history(str);
 			if (syntax_error_checker(str))

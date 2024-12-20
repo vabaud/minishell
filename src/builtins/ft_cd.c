@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:28:42 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/20 16:19:42 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/20 18:09:21 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ void	ft_cd(t_all *all, t_command *cmd)
 	else
 		path = ft_strdup(cmd->args[1]);
 	if (chdir(path) == -1)
+	{
+		ft_putstr_fd("No such file or directory\n", STDERR_FILENO);
 		return ;
+	}
 	free(path);
 	all->env = change_env_value("OLDPWD", all->env, oldpwd);
 	getcwd(pwd, PATH_MAX);

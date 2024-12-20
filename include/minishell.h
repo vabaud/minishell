@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:37:24 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/20 17:58:15 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/20 18:09:16 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ void					print_env(char **env);
 // BUILTINS
 void					ft_cd(t_all *all, t_command *cmd);
 int						val_numb(const char *str);
-void					ft_exit(char **args, t_all *all, t_pipe_info *pipe_info, t_command *cmd);
+void					ft_exit(char **args, t_all *all, t_pipe_info *pipe_info,
+							t_command *cmd);
 int						ft_echo(t_command *cmd);
 int						ft_unset(t_all *all, char **args);
 void					remove_env(t_all *all, char *s);
@@ -133,6 +134,7 @@ void					free_cmd(t_command *cmd);
 int						ft_cmdsize(t_command *lst);
 char					*remove_quotes(char *str);
 int						in_s_quote(char *s, int i);
+int						not_only_space(char *s);
 
 // ENV
 char					*replace_env(char *s, t_all *all);
@@ -152,7 +154,8 @@ void					pipe_loop(t_command *cmd, t_all *all,
 							t_pipe_info *pipe_info);
 void					parent_process(t_pipe_info *pipe_info, t_command *cmd);
 void					redirect_output(t_command *cmd, t_pipe_info *pipe_info);
-void					redirect_input(t_command *cmd, t_pipe_info *pipe_info, t_all *all);
+void					redirect_input(t_command *cmd, t_pipe_info *pipe_info,
+							t_all *all);
 void					wait_children(t_pipe_info *pipe_info);
 
 // SIGNAL

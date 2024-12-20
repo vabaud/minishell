@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 11:56:15 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/20 11:56:58 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/20 13:15:55 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,14 @@ void	redirect_output(t_command *cmd, int *pipe_fd)
 	}
 }
 
-void	parent_process(int prev_pipe_fd, int *pipe_fd, t_command *cmd)
+int	parent_process(int prev_pipe_fd, int *pipe_fd, t_command *cmd)
 {
 	if (prev_pipe_fd != -1)
 		close(prev_pipe_fd);
 	if (cmd->next)
 		close(pipe_fd[1]);
 	prev_pipe_fd = pipe_fd[0];
+	return (prev_pipe_fd);
 }
 
 void	free_all_exec(t_all *all, pid_t *pid)

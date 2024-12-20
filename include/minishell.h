@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:37:24 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/20 12:06:08 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/20 13:16:12 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,11 +136,13 @@ char					**env_cpy(char **env);
 
 // EXEC
 void					execute_pipeline(t_all *all);
-void					exec_cmd(t_command *cmd, t_all *all, pid_t *pid, int *pipe_fd);
+void					exec_cmd(t_command *cmd, t_all *all, pid_t *pid,
+							int *pipe_fd);
 char					*get_path(char *cmd, char **env);
 void					free_all_exec(t_all *all, pid_t *pid);
-void					pipe_loop(t_command *cmd, t_all *all, pid_t *pid, int prev_pipe_fd);
-void					parent_process(int prev_pipe_fd, int *pipe_fd,
+void					pipe_loop(t_command *cmd, t_all *all, pid_t *pid,
+							int prev_pipe_fd);
+int						parent_process(int prev_pipe_fd, int *pipe_fd,
 							t_command *cmd);
 void					redirect_output(t_command *cmd, int *pipe_fd);
 void					redirect_input(t_command *cmd, int prev_pipe_fd);

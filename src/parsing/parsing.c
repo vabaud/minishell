@@ -6,15 +6,17 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:00:58 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/20 12:16:20 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/20 13:15:29 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	browse_token(t_token *token, t_all *all, t_command *current,
-		t_command *cmd)
+t_command	*browse_token(t_token *token, t_all *all, t_command *cmd)
 {
+	t_command	*current;
+
+	current = new_command();
 	while (token)
 	{
 		token->value = remove_quotes(replace_env(token->value, all));
@@ -28,24 +30,23 @@ void	browse_token(t_token *token, t_all *all, t_command *current,
 		else if (token->type >= 2 && token->type <= 5)
 		{
 			if (!set_redirection(current, token, all))
-				return ;
+				return (NULL);
 			token = token->next;
 		}
 		token = token->next;
 	}
+	add_command(&cmd, current);
+	return (cmd);
 }
 
 t_command	*parse_token(t_token *token, t_all *all)
 {
 	t_command	*cmd;
-	t_command	*current;
 	t_token		*tmp;
 
 	cmd = NULL;
 	tmp = token;
-	current = new_command();
-	browse_token(token, all, current, cmd);
-	add_command(&cmd, current);
+	cmd = browse_token(token, all, cmd);
 	free_token(tmp);
 	return (cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:16:38 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/20 17:58:23 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/21 09:15:56 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_builtin(t_command *cmd)
 {
-	if (!cmd->args[0])
+	if (!cmd->args || !cmd->args[0])
 		return (0);
 	if (ft_strcmp(cmd->args[0], "echo") == 0)
 		return (1);
@@ -35,7 +35,7 @@ int	is_builtin(t_command *cmd)
 
 int	execute_builtins(t_all *all, t_command *cmd, t_pipe_info *pipe_info)
 {
-	if (!cmd->args[0])
+	if (!cmd->args || !cmd->args[0])
 		return (0);
 	if (ft_strcmp(cmd->args[0], "echo") == 0)
 		return (ft_echo(cmd), 1);

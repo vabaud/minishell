@@ -6,27 +6,35 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:14:08 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/20 19:03:58 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/21 11:31:35 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void execute_builtins_with_redirection(t_command *cmd, t_all *all, t_pipe_info *pipe_info)
+void	execute_builtins_with_redirection(t_command *cmd, t_all *all,
+		t_pipe_info *pipe_info)
 {
-    int saved_stdout;
+	int original_stdin;
+    int original_stdout;
 
-    if (cmd->output_file || cmd->next)
+    original_stdin = dup(STDIN_FILENO);
+    if (cmd->input_file || cmd->prev)
     {
-        saved_stdout = dup(STDOUT_FILENO);
+        if(!redirect_input(cmd, pipe_info) || cmd->prev)
+        {
+            close(original_stdin);
+            return;
+        }
+    }
+    original_stdout = dup(STDOUT_FILENO);
+    if (cmd->output_file)
         redirect_output(cmd, pipe_info);
-    }
     execute_builtins(all, cmd, pipe_info);
-    if (cmd->output_file || cmd->next)
-    {
-        dup2(saved_stdout, STDOUT_FILENO);
-        close(saved_stdout);
-    }
+    dup2(original_stdin, STDIN_FILENO);
+    dup2(original_stdout, STDOUT_FILENO);
+    close(original_stdin);
+    close(original_stdout);
 }
 
 void	wait_children(t_pipe_info *pipe_info)
@@ -56,15 +64,15 @@ void	pipe_loop(t_command *cmd, t_all *all, t_pipe_info *pipe_info)
 		if (cmd->next)
 			pipe(pipe_info->pipe_fd);
 		if (is_builtin(cmd) && !cmd->prev && !cmd->next)
-        {
+		{
 			execute_builtins_with_redirection(cmd, all, pipe_info);
-        }
+		}
 		else
 		{
 			pipe_info->pid[pipe_info->i] = fork();
 			if (pipe_info->pid[pipe_info->i++] == 0)
 			{
-				redirect_input(cmd, pipe_info, all);
+				redirect_input(cmd, pipe_info);
 				exec_cmd(cmd, all, pipe_info);
 			}
 			else
@@ -72,6 +80,8 @@ void	pipe_loop(t_command *cmd, t_all *all, t_pipe_info *pipe_info)
 		}
 		cmd = cmd->next;
 	}
+	if (pipe_info->prev_pipe_fd != -1)
+		close(pipe_info->prev_pipe_fd);
 }
 
 void	execute_pipeline(t_all *all)
@@ -82,6 +92,8 @@ void	execute_pipeline(t_all *all)
 	pipe_info.prev_pipe_fd = -1;
 	pipe_info.i = 0;
 	pipe_info.pid = malloc(sizeof(pid_t) * ft_cmdsize(all->cmd));
+    pipe_info.pipe_fd[0] = -1;
+    pipe_info.pipe_fd[1] = -1;
 	cmd = all->cmd;
 	pipe_loop(cmd, all, &pipe_info);
 	if (!is_builtin(all->cmd) || (is_builtin(all->cmd) && all->cmd->next))
@@ -97,21 +109,22 @@ void	exec_cmd(t_command *cmd, t_all *all, t_pipe_info *pipe_info)
 	redirect_output(cmd, pipe_info);
 	if (is_builtin(cmd))
 	{
-        execute_builtins_with_redirection(cmd, all, pipe_info);
-		free_all_exec(all, pipe_info);
+		execute_builtins_with_redirection(cmd, all, pipe_info);
+        free_all_exec(all, pipe_info);
+        exit(g_exit_code);
 	}
-	else
+	else if (cmd->args && cmd->args[0])
 	{
 		path = get_path(cmd->args[0], all->env);
 		if (!path)
 		{
 			ft_putstr_fd("command not found\n", STDERR_FILENO);
 			g_exit_code = 127;
-			free_all_exec(all, pipe_info);
 		}
 		else
 			execve(path, cmd->args, all->env);
 		free(path);
 	}
+	free_all_exec(all, pipe_info);
 	exit(g_exit_code);
 }

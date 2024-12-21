@@ -6,13 +6,13 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 11:56:15 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/20 17:47:43 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/21 11:41:18 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	redirect_input(t_command *cmd, t_pipe_info *pipe_info, t_all *all)
+int	redirect_input(t_command *cmd, t_pipe_info *pipe_info)
 {
 	int	fd;
 
@@ -22,17 +22,23 @@ void	redirect_input(t_command *cmd, t_pipe_info *pipe_info, t_all *all)
 		if (fd < 0)
 		{
 			perror("open input");
-            free_all_exec(all, pipe_info);
-			exit(EXIT_FAILURE);
+            g_exit_code = EXIT_FAILURE;
+            return 0;
 		}
 		dup2(fd, STDIN_FILENO);
 		close(fd);
+        if (pipe_info->prev_pipe_fd != -1)
+		{
+			close(pipe_info->prev_pipe_fd);
+			pipe_info->prev_pipe_fd = -1;
+		}
 	}
 	else if (cmd->prev)
 	{
 		dup2(pipe_info->prev_pipe_fd, STDIN_FILENO);
 		close(pipe_info->prev_pipe_fd);
 	}
+    return 1;
 }
 
 void	redirect_output(t_command *cmd, t_pipe_info *pipe_info)
@@ -52,6 +58,11 @@ void	redirect_output(t_command *cmd, t_pipe_info *pipe_info)
 		}
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
+        if (pipe_info->pipe_fd[1] != -1)
+        {
+            close(pipe_info->pipe_fd[1]);
+            close(pipe_info->pipe_fd[0]);
+        }
 	}
 	else if (cmd->next)
 	{
@@ -66,8 +77,10 @@ void	parent_process(t_pipe_info *pipe_info, t_command *cmd)
 	if (pipe_info->prev_pipe_fd != -1)
 		close(pipe_info->prev_pipe_fd);
 	if (cmd->next)
+    {
 		close(pipe_info->pipe_fd[1]);
-	pipe_info->prev_pipe_fd = pipe_info->pipe_fd[0];
+    }
+    pipe_info->prev_pipe_fd = pipe_info->pipe_fd[0];
 }
 
 void	free_all_exec(t_all *all, t_pipe_info *pipe_info)

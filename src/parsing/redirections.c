@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 14:54:25 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/20 17:41:52 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/21 09:15:01 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	set_redirection(t_command *cmd, t_token *token, t_all *all)
 		|| token->type == TOKEN_REDIR_APPEND)
 	{
 		if (!set_out_or_append(cmd, token->next->value, token->type, all))
-			return (0); 
+			return (0);
 	}
 	return (1);
 }
@@ -44,7 +44,12 @@ int	set_out_or_append(t_command *cmd, char *file, t_token_type type, t_all *all)
 {
 	int	fd;
 
-	fd = open(file, O_CREAT | O_RDONLY, 0644);
+	if (type == TOKEN_REDIR_APPEND)
+		fd = open(file, O_CREAT | O_WRONLY | O_APPEND, 0644);
+	else
+	{
+		fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	}
 	if (cmd->output_file)
 		free(cmd->output_file);
 	if (cmd->append_mode == 1 && type == TOKEN_REDIR_OUT)

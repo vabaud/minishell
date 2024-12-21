@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:25:41 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/20 16:15:05 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/21 12:56:18 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ int	ft_env(char **env, t_command *cmd)
 		}
 		return (1);
 	}
-    ft_putstr_fd("No such file or directory\n", STDERR_FILENO);
+	ft_putstr_fd("No such file or directory\n", STDERR_FILENO);
 	return (0);
 }

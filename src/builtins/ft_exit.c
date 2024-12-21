@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 17:51:16 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/21 12:35:00 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/21 12:56:09 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ void	ft_exit(char **args, t_all *all, t_pipe_info *pipe_info, t_command *cmd)
 	int	i;
 
 	i = 0;
-    if (!cmd->prev)
-    {    
-        ft_putstr_fd("exit\n", STDOUT_FILENO);
-    }
+	if (!cmd->prev)
+	{
+		ft_putstr_fd("exit\n", STDOUT_FILENO);
+	}
 	if (args[1])
 	{
 		if (val_numb(args[1]))

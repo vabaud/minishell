@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 11:56:15 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/21 11:42:02 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/21 12:54:11 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,25 @@ int	redirect_input(t_command *cmd, t_pipe_info *pipe_info)
 	return (1);
 }
 
+int	output_fd(t_command *cmd)
+{
+	int	fd;
+
+	fd = 0;
+	if (cmd->append_mode)
+		fd = open(cmd->output_file, O_CREAT | O_RDWR | O_APPEND, 0644);
+	else
+		fd = open(cmd->output_file, O_CREAT | O_RDWR | O_TRUNC, 0644);
+	return (fd);
+}
+
 void	redirect_output(t_command *cmd, t_pipe_info *pipe_info)
 {
 	int	fd;
 
 	if (cmd->output_file)
 	{
-		if (cmd->append_mode)
-			fd = open(cmd->output_file, O_CREAT | O_RDWR | O_APPEND, 0644);
-		else
-			fd = open(cmd->output_file, O_CREAT | O_RDWR | O_TRUNC, 0644);
+		fd = output_fd(cmd);
 		if (fd < 0)
 		{
 			perror("open output");

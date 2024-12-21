@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:52:56 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/20 17:31:34 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/21 12:56:29 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	free_token(t_token *token)
 	{
 		tmp = token;
 		token = token->next;
-        free(tmp->value);
+		free(tmp->value);
 		free(tmp);
 	}
 }

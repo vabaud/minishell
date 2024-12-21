@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 11:16:11 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/20 15:51:25 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/21 13:08:14 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	remove_env(t_all *all, char *s)
 	j = 0;
 	while (all->env[i])
 		i++;
-	new_env = malloc(sizeof(char *) * i);
+	new_env = malloc(sizeof(char *) * (i + 1));
 	i = 0;
 	while (all->env[i])
 	{

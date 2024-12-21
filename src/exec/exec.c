@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 16:14:08 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/21 11:42:04 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/21 12:47:05 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,22 @@ void	execute_builtins_with_redirection(t_command *cmd, t_all *all,
 	int	original_stdout;
 
 	original_stdin = dup(STDIN_FILENO);
-	if (cmd->input_file || cmd->prev)
+	if (cmd->input_file)
 	{
 		if (!redirect_input(cmd, pipe_info) || cmd->prev)
 		{
-			close(original_stdin);
-			return ;
+            close(original_stdin);
+            return ;
 		}
 	}
 	original_stdout = dup(STDOUT_FILENO);
 	if (cmd->output_file)
 		redirect_output(cmd, pipe_info);
+    if(cmd->args && !ft_strcmp(cmd->args[0], "exit"))
+    {
+        close(original_stdin);
+        close(original_stdout);
+    }
 	execute_builtins(all, cmd, pipe_info);
 	dup2(original_stdin, STDIN_FILENO);
 	dup2(original_stdout, STDOUT_FILENO);

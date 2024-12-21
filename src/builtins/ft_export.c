@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/20 11:16:07 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/20 16:04:18 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/21 14:44:34 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	add_n_up_env(t_all *all, const char *var)
 	return (1);
 }
 
-void	ft_export(t_all *all, char **args)
+int	ft_export(t_all *all, char **args)
 {
 	int		i;
 	char	**new_env;
@@ -88,7 +88,6 @@ void	ft_export(t_all *all, char **args)
 		sort_tab(new_env);
 		while (new_env[++i])
 			print_var(new_env[i], new_env);
-		return ;
 	}
 	i = 0;
 	while (++i < count_arg(args))
@@ -97,12 +96,13 @@ void	ft_export(t_all *all, char **args)
 			add_n_up_env(all, args[i]);
 		else
 		{
-			ft_putstr_fd("export: n'est pas un indentifier valide :",
-				STDERR_FILENO);
-			ft_putstr_fd(args[i], STDERR_FILENO);
-			ft_putchar_fd('\n', STDERR_FILENO);
+			print_err_export(args[i]);
+			g_exit_code = 1;
 		}
 	}
+	if (g_exit_code != 1)
+		g_exit_code = 0;
+	return (g_exit_code);
 }
 
 void	sort_tab(char **env)

@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:26:17 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/20 18:09:42 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/21 14:51:25 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	shell_loop(t_all *all, t_token *token)
 
 	while (1)
 	{
-		str = readline("!!! shell> ");
+		str = readline("mshell> ");
 		if (!str)
 		{
 			write(1, "exit\n", 5);

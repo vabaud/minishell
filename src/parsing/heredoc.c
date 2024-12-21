@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 17:45:04 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/20 15:38:17 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/21 14:58:58 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,16 @@ void	heredoc_loop(char *delimiter, int change, int fd, t_all *all)
 			write(1, "Heredoc: EOF detected\n", 23);
 			break ;
 		}
-		line[ft_strlen(line) - 1] = '\0';
-		if (!ft_strcmp(delimiter, line))
+		if (line[0] && not_only_space(line))
 		{
-			free(line);
-			break ;
+			line[ft_strlen(line) - 1] = '\0';
+			if (!ft_strcmp(delimiter, line))
+				return (free(line));
+			if (change == 0)
+				line = replace_env(line, all);
+			ft_putstr_fd(line, fd);
+			ft_putstr_fd("\n", fd);
 		}
-		if (change == 0)
-			line = replace_env(line, all);
-		ft_putstr_fd(line, fd);
-		ft_putstr_fd("\n", fd);
 		free(line);
 	}
 }

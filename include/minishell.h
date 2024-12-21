@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 18:37:24 by vabaud            #+#    #+#             */
-/*   Updated: 2024/12/21 12:56:47 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/21 14:50:32 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void					shell_loop(t_all *all, t_token *token);
 void					print_env(char **env);
 
 // BUILTINS
-void					ft_cd(t_all *all, t_command *cmd);
+int						ft_cd(t_all *all, t_command *cmd);
 int						val_numb(const char *str);
 void					ft_exit(char **args, t_all *all, t_pipe_info *pipe_info,
 							t_command *cmd);
@@ -85,9 +85,10 @@ int						valid_indentifier(const char *str);
 int						add_n_up_env(t_all *all, const char *var);
 int						browse_env(char **env, const char *var, char *name,
 							int name_len);
-void					ft_export(t_all *all, char **args);
+int						ft_export(t_all *all, char **args);
+void					print_err_export(char *args);
 int						ft_pwd(void);
-int						execute_builtins(t_all *all, t_command *cmd,
+void					execute_builtins(t_all *all, t_command *cmd,
 							t_pipe_info *pipe_info);
 int						ft_env(char **env, t_command *cmd);
 int						is_builtin(t_command *cmd);

@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:25:24 by hbouchel          #+#    #+#             */
-/*   Updated: 2024/12/20 11:23:09 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/12/21 14:47:08 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,5 @@ int	ft_echo(t_command *cmd)
 	}
 	if (newline)
 		ft_printf("\n");
-	return (1);
+	return (0);
 }
